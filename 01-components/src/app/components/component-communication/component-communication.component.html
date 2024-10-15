@@ -1,0 +1,10 @@
+<h1>
+  4. component-communication
+  <a
+    href="https://www.tektutorialshub.com/angular/angular-component-communication-sharing-data/"
+    >Ref</a
+  >
+</h1>
+<p>parent to child - {{ message }}</p>
+child input -
+<input type="text"  (input)="handleChange($event)" [(ngModel)]="message"/>

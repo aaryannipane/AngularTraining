@@ -9,6 +9,9 @@ import { DirectiveComponent } from './components/directive/directive.component';
 import { ttClassDirective } from './components/directive/tt-class.directive';
 import { PipeComponent } from './components/pipe/pipe.component';
 import { TempConverterPipe } from './components/pipe/temp-converter.pipe';
+import { DatePipe } from '@angular/common';
+import { ComponentCommunicationComponent } from './components/component-communication/component-communication.component';
+import { LifeCycleHookComponent } from './components/life-cycle-hook/life-cycle-hook.component';
 
 @NgModule({
   declarations: [
@@ -18,10 +21,11 @@ import { TempConverterPipe } from './components/pipe/temp-converter.pipe';
     ttClassDirective,
     PipeComponent,
     TempConverterPipe,
-    
+    ComponentCommunicationComponent,
+    LifeCycleHookComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

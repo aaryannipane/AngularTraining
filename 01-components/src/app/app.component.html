@@ -1,15 +1,19 @@
 <h1>1. Components and Data binding also with ngModel directive</h1>
 <header-component [mera-title]="'Input/prop Header'"></header-component>
-
 <directive-component></directive-component>
 <app-pipe></app-pipe>
 
+<hr />
+parent input - <input type="text" [(ngModel)]="parentMessage" /> <br />
+child to parent output - {{ parentMessage }} <br />
+using local variable - {{ child.message }}
+<app-component-communication
+  [myMessage]="parentMessage"
+  (dataChanged)="dataChangedHandler($event)"
+  #child
+></app-component-communication>
 
-
-
-
-
-
-
-
+<hr />
+<button (click)="hide()" class="btn btn-primary">Toggle child hide</button>
+<app-life-cycle-hook *ngIf="displayChild"></app-life-cycle-hook>
 <div class="mb-5"></div>
