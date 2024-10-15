@@ -1,0 +1,68 @@
+<hr />
+<h1>2. Directives</h1>
+<hr />
+<!-- *ngFor structural directive - https://www.tektutorialshub.com/angular/angular-ngfor-directive/ -->
+<h2>> *ngFor structural directive</h2>
+<h3>{{ title }}</h3>
+<ul>
+  <li
+    *ngFor="
+      let movie of movies;
+      trackBy: trackByFn;
+      let i = index;
+      let o = odd;
+      let e = even;
+      let first = first;
+      let last = last
+    "
+    [ngClass]="{ odd: o, even: e, first: first, last: last }"
+  >
+    {{ movie.title }} {{ movie.director }} - {{ i }}
+  </li>
+</ul>
+
+<hr />
+<h2>> ngSwitch, *ngSwitchCase, *ngSwitchDefault</h2>
+input number: <input type="text" [(ngModel)]="num" />
+<div [ngSwitch]="num">
+  <div *ngSwitchCase="'1'">One</div>
+  <div *ngSwitchCase="'1'">with same value both can render</div>
+  <div *ngSwitchCase="'2'">Two</div>
+  <div *ngSwitchCase="'3'">Three</div>
+  <div *ngSwitchCase="'4'">Four</div>
+  <div *ngSwitchCase="'5'">Five</div>
+  <div *ngSwitchDefault>This is Default</div>
+</div>
+
+<hr />
+<h2>> *ngIf</h2>
+<span class="badge badge-primary">put 1 in above text box</span><br />
+<p *ngIf="num == '1'; then thenBlock; else elseBlock">
+  This is not shown when using then
+</p>
+<ng-template #thenBlock>this is then block when condition is true</ng-template>
+<ng-template #elseBlock>this is else block</ng-template>
+
+<hr />
+<h2>> ngClass attribute directive</h2>
+<p [ngClass]="'border'">NgClass with simple string</p>
+<p [ngClass]="['border', 'border-primary']">NgClass with Array</p>
+<p [ngClass]="{ border: true, 'border-success text-success': true }">
+  NgClass with Object
+</p>
+<p [ngClass]="true ? 'border border-warning' : 'border'">
+  NgClass with condition - we can use variables and func to give class names
+</p>
+
+<hr />
+<h2>> ngStyle Directive</h2>
+enter color name: <input type="text" [(ngModel)]="color" />
+<p [ngStyle]="{ color: color, 'background-color': color==='red' ? 'yellow' : 'pink' , 'font-size.px': '20'}">
+  this is using NgStyle
+</p>
+
+<hr>
+<h2>> Custom directive <span class="text-danger badge">(not completed)</span></h2>
+<button [ttClass]="'btn'">Submit</button>
+
+

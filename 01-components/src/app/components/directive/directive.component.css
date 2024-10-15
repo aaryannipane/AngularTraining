@@ -1,0 +1,14 @@
+.odd {
+  background-color: azure;
+}
+.even {
+  background-color: floralwhite;
+}
+
+.first {
+  border: 1px solid black;
+}
+
+.last {
+  border: 1px solid red;
+}

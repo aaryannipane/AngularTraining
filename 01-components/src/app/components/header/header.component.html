@@ -1,0 +1,30 @@
+<!-- {{}} interpolation for one way data binding component to view  -->
+<h1 title="{{ title | uppercase }}">{{ title }}</h1>
+
+<!-- [binding-target]="binding-source" propert binding -->
+<button [disabled]="isDisabled" [style.color]="color">I am disabled</button>
+
+<!-- https://www.tektutorialshub.com/angular/event-binding-in-angular/ -->
+<!-- (target-event)="templateStatement" event binding from view to component one way -->
+<!-- <button (click)="onSave($event)">Save</button> -->
+<!-- using on- syntax -->
+<!-- <button on-click="onSave($event)">Save</button> -->
+<!-- Template reference variable -->
+<button #el on-click="onSave(el)">Save</button>
+
+<!-- <input type="text" (keyup)="username=$any($event.target).value"> -->
+<input
+  type="text"
+  (keyup.control.shift.enter)="username = $any($event.target).value"
+/>
+<p>{{ username }}</p>
+
+<!-- https://www.tektutorialshub.com/angular/ngmodel-two-way-data-binding-in-angular/ -->
+<!-- Two Way binding : bannana boxing [()] -->
+<!-- <input
+  type="text"
+  [value]="username"
+  (input)="username = $any($event.target).value"
+/> -->
+<input type="text" name="username" [(ngModel)]="username" />
+<p>You entered {{ username }}</p>

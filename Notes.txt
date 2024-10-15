@@ -1,0 +1,9 @@
+-- create angular project 
+$ ng new project-name
+
+-- with ng module
+$ng new projectname --no-standalone
+
+-- compile and run project
+$ ng serve
+

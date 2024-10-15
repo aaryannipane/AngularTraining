@@ -1,0 +1,26 @@
+<hr>
+<!-- https://v17.angular.io/api?query=pipe -->
+<h1>3. Pipes <a href="https://www.tektutorialshub.com/angular/angular-pipes/">ref</a></h1>
+<p>Unformatted Date : {{toDate}}</p>
+<p>formatted Date : {{toDate | date}}</p>
+<p>Pipe Date with argument: {{toDate | date:'medium'}}</p>
+<p>Pipe Date with chaining: {{toDate | date:'medium' | uppercase}}</p>
+
+<p>Slice Pipe : {{'Aryan Nipane' | slice:1:5}}</p>
+
+<p>Currency Pipe : {{5670050 | currency:'INR':true:'4.4-5'}}</p>
+
+<p>Custom temperature Pipe : {{32 | tempConverter:'F'}}</p>
+
+<p>Async Pipe : {{obsValue | async}}</p>
+
+<p *ngIf="(obsValue | async); else elseBlock">
+    {{obsValue | async}} - without as use this to get value (obs.pipe(shareReplay()))
+</p>
+<p *ngIf="(obsValue | async) as value; else elseBlock">
+    {{value}} - with as
+</p>
+<ng-template #elseBlock>Observable is loading...</ng-template>
+
+
+<p class="text-danger">key value pipe pending</p>
