@@ -1,0 +1,85 @@
+<h1>6. Reactive-forms </h1>
+<form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+        <label for="firstname">First Name </label>
+        <input type="text" id="firstname" name="firstname" class="form-control" formControlName="firstname">
+    </div>
+
+    <div *ngIf="!firstname?.valid && (firstname?.dirty ||firstname?.touched)" class="text-danger">
+        <div [hidden]="!firstname.errors.required">
+            First Name is required
+        </div>
+        <div [hidden]="!firstname.errors.minlength">
+            Min Length is 10
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="lastname">Last Name </label>
+        <input type="text" id="lastname" name="lastname" class="form-control" formControlName="lastname">
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email </label>
+        <input type="text" id="email" name="email" class="form-control" formControlName="email">
+    </div>
+
+    <div class="form-group">
+        <label for="gender">Geneder </label><br>
+        <input type="radio" value="male" id="gender" name="gender" formControlName="gender"> Male
+        <input type="radio" value="female" id="gender" name="gender" formControlName="gender"> Female
+    </div>
+
+    <div class="form-group">
+        <label for="isMarried">Married </label>
+        <input type="checkbox" id="isMarried" name="isMarried" formControlName="isMarried">
+    </div>
+
+    <div formGroupName="address">
+        <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" class="form-control" name="city" formControlName="city">
+        </div>
+
+        <div class="form-group">
+            <label for="street">Street</label>
+            <input type="text" class="form-control" name="street" formControlName="street">
+        </div>
+
+        <div class="form-group">
+            <label for="pincode">Pin Code</label>
+            <input type="text" class="form-control" name="pincode" formControlName="pincode">
+        </div>
+
+        <p>
+            <label for="country">country </label>
+            <select id="country" name="country" formControlName="country">
+                <option value="1">India</option>
+                <option value="2">USA</option>
+                <option value="3">England</option>
+                <option value="4">Singapore</option>
+            </select>
+        </p>
+    </div>
+
+
+    <p class="btn-group">
+        <button type="submit" class="btn">Submit</button>
+        <button type="button" class="btn" (click)="setValue()">Set value</button>
+        <button type="button" class="btn" (click)="patchName()">Patch Name</button>
+        <button type="button" class="btn" (click)="this.contactForm.reset()">Reset</button>
+    </p>
+
+</form>
+
+
+<h3>Form Status</h3>
+<b>valid : </b>{{contactForm.valid}}
+<b>invalid : </b>{{contactForm.invalid}}
+<b>touched : </b>{{contactForm.touched}}
+<b>untouched : </b>{{contactForm.untouched}}
+<b>pristine : </b>{{contactForm.pristine}}
+<b>dirty : </b>{{contactForm.dirty}}
+<b>disabled : </b>{{contactForm.disabled}}
+<b>enabled : </b>{{contactForm.enabled}}

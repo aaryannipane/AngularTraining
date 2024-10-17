@@ -7,13 +7,14 @@
 parent input - <input type="text" [(ngModel)]="parentMessage" /> <br />
 child to parent output - {{ parentMessage }} <br />
 using local variable - {{ child.message }}
-<app-component-communication
-  [myMessage]="parentMessage"
-  (dataChanged)="dataChangedHandler($event)"
-  #child
-></app-component-communication>
+<app-component-communication [myMessage]="parentMessage" (dataChanged)="dataChangedHandler($event)"
+  #child></app-component-communication>
 
 <hr />
 <button (click)="hide()" class="btn btn-primary">Toggle child hide</button>
-<app-life-cycle-hook *ngIf="displayChild"></app-life-cycle-hook>
+<app-life-cycle-hook *ngIf="displayChild" [message]="parentMessage"></app-life-cycle-hook>
+
+
+<hr>
+<app-reactive-forms></app-reactive-forms>
 <div class="mb-5"></div>
