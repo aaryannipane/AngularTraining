@@ -1,0 +1,9 @@
+<h1>> services </h1>
+
+<ul *ngIf="products?.length > 0">
+    <li *ngFor="let prod of products">
+        {{prod.productID}} - {{prod.name}}
+    </li>
+</ul>
+
+<button (click)="getProducts()">Get products</button>

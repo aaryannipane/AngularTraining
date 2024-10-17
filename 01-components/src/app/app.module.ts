@@ -13,6 +13,9 @@ import { DatePipe } from '@angular/common';
 import { ComponentCommunicationComponent } from './components/component-communication/component-communication.component';
 import { LifeCycleHookComponent } from './components/life-cycle-hook/life-cycle-hook.component';
 import { ReactiveFormsComponent } from './components/reactive-forms/reactive-forms.component';
+import { ServicesComponent } from './components/services/services.component';
+import { ProductService } from './product.service';
+import { LoggerService } from './logger.service';
 
 @NgModule({
   declarations: [
@@ -25,9 +28,15 @@ import { ReactiveFormsComponent } from './components/reactive-forms/reactive-for
     ComponentCommunicationComponent,
     LifeCycleHookComponent,
     ReactiveFormsComponent,
+    ServicesComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
-  providers: [DatePipe],
+  // providers are injector instance where we register all dependencies which we are required in this application
+  providers: [
+    DatePipe,
+    LoggerService,
+    { provide: 'PRODUCT_SERVICE', useClass: ProductService },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

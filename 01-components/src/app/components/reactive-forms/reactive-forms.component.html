@@ -52,20 +52,24 @@
             <input type="text" class="form-control" name="pincode" formControlName="pincode">
         </div>
 
-        <p>
-            <label for="country">country </label>
-            <select id="country" name="country" formControlName="country">
-                <option value="1">India</option>
-                <option value="2">USA</option>
-                <option value="3">England</option>
-                <option value="4">Singapore</option>
-            </select>
-        </p>
+
     </div>
 
 
+    <p>
+        <label for="country">country </label>
+        <select id="country" name="country" formControlName="country">
+            <option value="null" disabled>Select country</option>
+            <option value="1">India</option>
+            <option value="2">USA</option>
+            <option value="3">England</option>
+            <option value="4">Singapore</option>
+        </select>
+    </p>
+
+
     <p class="btn-group">
-        <button type="submit" class="btn">Submit</button>
+        <button type="submit" class="btn" [disabled]="!contactForm.valid">Submit</button>
         <button type="button" class="btn" (click)="setValue()">Set value</button>
         <button type="button" class="btn" (click)="patchName()">Patch Name</button>
         <button type="button" class="btn" (click)="this.contactForm.reset()">Reset</button>
@@ -75,6 +79,7 @@
 
 
 <h3>Form Status</h3>
+<!-- all this state can be accessed by form, formgroup, controller -->
 <b>valid : </b>{{contactForm.valid}}
 <b>invalid : </b>{{contactForm.invalid}}
 <b>touched : </b>{{contactForm.touched}}
@@ -83,3 +88,15 @@
 <b>dirty : </b>{{contactForm.dirty}}
 <b>disabled : </b>{{contactForm.disabled}}
 <b>enabled : </b>{{contactForm.enabled}}
+
+<h4>Form & Form control all methods <a href="https://www.tektutorialshub.com/angular/formcontrol-in-angular/">ref</a>
+</h4>
+<h4>From & Form group methods <a href="https://www.tektutorialshub.com/angular/formgroup-in-angular/">ref</a></h4>
+
+<p>select roles</p>
+<form [formGroup]="rolesForm" (ngSubmit)="onRoleSubmit()">
+    <label><input type="checkbox" formControlName="admin">admin</label>
+    <label><input type="checkbox" formControlName="seller">seller</label>
+    <label><input type="checkbox" formControlName="buyer">buyer</label>
+    <input type="submit" value="submit">
+</form>
