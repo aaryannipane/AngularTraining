@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  RequiredValidator,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import { gte } from './gte.validator';
+import { gteAsync } from './gteAsync.validator';
+import { matchPassword } from './matchPassword.validator';
 
 @Component({
   selector: 'app-reactive-forms',
@@ -28,6 +25,8 @@ export class ReactiveFormsComponent implements OnInit {
         ],
       ],
       email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+      confirm: ['', [Validators.required]],
       gender: ['', [Validators.required]],
       isMarried: ['', [Validators.required]],
 
@@ -36,7 +35,8 @@ export class ReactiveFormsComponent implements OnInit {
       address: this.formBuilder.group({
         city: ['', [Validators.required]],
         street: ['', [Validators.required]],
-        pincode: ['', [Validators.required]],
+        // pincode: ['', [Validators.required, gte(20)]],
+        pincode: ['', [Validators.required], [gteAsync]],
       }),
     });
 
@@ -121,6 +121,8 @@ export class ReactiveFormsComponent implements OnInit {
       firstname: 'Rahul',
       lastname: 'Dravid',
       email: 'rahul@gmail.com',
+      password: '123',
+      confirm: '123',
       gender: 'male',
       isMarried: true,
       country: '1',
@@ -145,6 +147,10 @@ export class ReactiveFormsComponent implements OnInit {
 
     // mark as touched
     this.contactForm.markAsUntouched();
+
+    // set and clear validators
+    this.firstname.clearValidators();
+    this.firstname.updateValueAndValidity();
   }
 
   onSubmit() {

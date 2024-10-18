@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { InjectionToken, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +16,11 @@ import { ReactiveFormsComponent } from './components/reactive-forms/reactive-for
 import { ServicesComponent } from './components/services/services.component';
 import { ProductService } from './product.service';
 import { LoggerService } from './logger.service';
+import { HttpClientComponent } from './components/http-client/http-client.component';
+import { provideHttpClient } from '@angular/common/http';
+
+
+export const API_URL = new InjectionToken<string>('');
 
 @NgModule({
   declarations: [
@@ -29,13 +34,15 @@ import { LoggerService } from './logger.service';
     LifeCycleHookComponent,
     ReactiveFormsComponent,
     ServicesComponent,
+    HttpClientComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   // providers are injector instance where we register all dependencies which we are required in this application
   providers: [
+    provideHttpClient(),
     DatePipe,
-    LoggerService,
     { provide: 'PRODUCT_SERVICE', useClass: ProductService },
+    { provide: API_URL, useValue: 'https://www.youtube.com' },
   ],
   bootstrap: [AppComponent],
 })

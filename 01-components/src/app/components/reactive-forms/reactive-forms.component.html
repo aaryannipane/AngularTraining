@@ -24,6 +24,14 @@
         <label for="email">Email </label>
         <input type="text" id="email" name="email" class="form-control" formControlName="email">
     </div>
+    <div class="form-group">
+        <label for="password">Password </label>
+        <input type="password" id="password" name="password" class="form-control" formControlName="password">
+    </div>
+    <div class="form-group">
+        <label for="confirm">Confirm </label>
+        <input type="password" id="confirm" name="confirm" class="form-control" formControlName="confirm">
+    </div>
 
     <div class="form-group">
         <label for="gender">Geneder </label><br>
@@ -50,6 +58,11 @@
         <div class="form-group">
             <label for="pincode">Pin Code</label>
             <input type="text" class="form-control" name="pincode" formControlName="pincode">
+            <div *ngIf="!pincode.valid && (pincode.dirty ||pincode.touched)">
+                <div *ngIf="pincode.errors.gte" class="text-danger">
+                    The number should be greater than {{pincode.errors.requiredValue}}
+                </div>
+            </div>
         </div>
 
 
