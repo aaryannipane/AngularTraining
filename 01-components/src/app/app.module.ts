@@ -17,8 +17,15 @@ import { ServicesComponent } from './components/services/services.component';
 import { ProductService } from './product.service';
 import { LoggerService } from './logger.service';
 import { HttpClientComponent } from './components/http-client/http-client.component';
-import { provideHttpClient } from '@angular/common/http';
-
+import {
+  HTTP_INTERCEPTORS,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
+import { AppHttpInterceptor } from './AppHttpInterceptor';
+import { ErrorComponent } from './components/error/error.component';
+import { RoutingComponent } from './components/routing/routing.component';
+import { ProductsComponent } from './components/products/products.component';
 
 export const API_URL = new InjectionToken<string>('');
 
@@ -35,14 +42,22 @@ export const API_URL = new InjectionToken<string>('');
     ReactiveFormsComponent,
     ServicesComponent,
     HttpClientComponent,
+    ErrorComponent,
+    RoutingComponent,
+    ProductsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   // providers are injector instance where we register all dependencies which we are required in this application
   providers: [
-    provideHttpClient(),
     DatePipe,
     { provide: 'PRODUCT_SERVICE', useClass: ProductService },
     { provide: API_URL, useValue: 'https://www.youtube.com' },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AppHttpInterceptor,
+      multi: true,
+    },
+    provideHttpClient(withInterceptorsFromDi()),
   ],
   bootstrap: [AppComponent],
 })

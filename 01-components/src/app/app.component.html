@@ -1,9 +1,17 @@
-<h1>1. Components and Data binding also with ngModel directive</h1>
-<header-component [mera-title]="'Input/prop Header'"></header-component>
-<directive-component></directive-component>
-<app-pipe></app-pipe>
+<ul>
+  <li><a [routerLink]="'/'">Home</a></li>
+  <li><a [routerLink]="'directive'">directive</a></li>
+  <li><a [routerLink]="'pipe'">pipe</a></li>
+  <li><a [routerLink]="'form'">reactive form</a></li>
+  <li><a [routerLink]="'services'">services</a></li>
+  <li><a [routerLink]="'http'">http</a></li>
+  <li><a [routerLink]="['product', '1']" [queryParams]="{page:2, color: 'red', sort: 'seller'}">product</a></li>
+</ul>
 
-<hr />
+<router-outlet></router-outlet>
+
+<hr>
+<hr>
 parent input - <input type="text" [(ngModel)]="parentMessage" /> <br />
 child to parent output - {{ parentMessage }} <br />
 using local variable - {{ child.message }}
@@ -15,12 +23,5 @@ using local variable - {{ child.message }}
 <app-life-cycle-hook *ngIf="displayChild" [message]="parentMessage"></app-life-cycle-hook>
 
 
-<hr>
-<app-reactive-forms></app-reactive-forms>
 
-<hr>
-<app-services></app-services>
-
-<hr>
-<app-http-client></app-http-client>
 <div class="mb-5"></div>
