@@ -1,6 +1,16 @@
 import { Component, ViewChild } from '@angular/core';
 import { ComponentCommunicationComponent } from './components/component-communication/component-communication.component';
 import { RandomService } from './random.service';
+import {
+  NavigationEnd,
+  Event as NavigationEvent,
+  NavigationStart,
+  ResolveEnd,
+  ResolveStart,
+  RouteConfigLoadEnd,
+  RouteConfigLoadStart,
+  Router,
+} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +18,35 @@ import { RandomService } from './random.service';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  constructor(private randomService: RandomService) {
+  isLoading: boolean = false;
+  constructor(private randomService: RandomService, private _router: Router) {
     console.log(`App Component - ${this.randomService.randomValue}`);
+
+    this._router.events.subscribe((e: NavigationEvent) => {
+      if (e instanceof NavigationStart) {
+        console.log('--navigation start--');
+      }
+      if (e instanceof RouteConfigLoadStart) {
+        console.log('--RouteConfigLoadStart--');
+      }
+      if (e instanceof RouteConfigLoadEnd) {
+        console.log('--RouteConfigLoadEnd--');
+      }
+
+      if (e instanceof NavigationEnd) {
+        console.log('--navigation end--');
+      }
+
+      if (e instanceof ResolveStart) {
+        console.log('--ResolveStart--');
+        this.isLoading = true;
+      }
+
+      if (e instanceof ResolveEnd) {
+        console.log('--ResolveEnd--');
+        this.isLoading = false;
+      }
+    });
   }
 
   title = '01-components';

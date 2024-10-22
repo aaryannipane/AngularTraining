@@ -1,0 +1,25 @@
+<h1>advance-component</h1>
+<!-- content from parent here in ng-component -->
+<div class="border text-center">
+
+    <ng-content select="header"></ng-content>
+    <hr>
+    <ng-content select="content"></ng-content>
+</div>
+
+
+<!-- ng-container is not rendered only content inside is rendered  -->
+<p>
+    <ng-container *ngIf="true">hello my name is aryan</ng-container>
+</p>
+
+
+<div>
+    <ng-container *ngTemplateOutlet="info">
+        this is not displayed
+    </ng-container>
+</div>
+
+<ng-template #info>
+    <p class="bg-info">this is from ng-template</p>
+</ng-template>

@@ -3,13 +3,14 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { gte } from './gte.validator';
 import { gteAsync } from './gteAsync.validator';
 import { matchPassword } from './matchPassword.validator';
+import { IDeactivateComponent } from '../../AuthGuard.service';
 
 @Component({
   selector: 'app-reactive-forms',
   templateUrl: './reactive-forms.component.html',
   styleUrl: './reactive-forms.component.css',
 })
-export class ReactiveFormsComponent implements OnInit {
+export class ReactiveFormsComponent implements OnInit , IDeactivateComponent{
   contactForm: any;
   rolesForm: any;
   constructor(private formBuilder: FormBuilder) {}
@@ -160,5 +161,20 @@ export class ReactiveFormsComponent implements OnInit {
   }
   onRoleSubmit() {
     console.log(this.rolesForm.value);
+  }
+
+  canExit():boolean{
+    console.log("helloooo");
+    
+    // check if any data filled 
+    if(this.contactForm.dirty){
+      if(confirm("Do you wish to Please confirm")){
+        return true
+      }else{
+        return false;
+      }
+    }
+
+    return true
   }
 }

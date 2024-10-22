@@ -36,11 +36,15 @@ export class RoutingComponent implements OnInit {
     this._ActivatedRoute.queryParamMap.subscribe((queryParamMap) => {
       console.log('Page - ' + queryParamMap.get('page'));
     });
+
   }
 
   onNext() {
+    // take one route back
+    // this._router.navigate(['../']);
     this._router.navigate(['product', '2'], {
       queryParams: { page: 3, sort: 'seller', color: 'red' },
+      queryParamsHandling: 'replace',
     });
 
     // another way

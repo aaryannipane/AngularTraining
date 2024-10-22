@@ -26,6 +26,8 @@ import { AppHttpInterceptor } from './AppHttpInterceptor';
 import { ErrorComponent } from './components/error/error.component';
 import { RoutingComponent } from './components/routing/routing.component';
 import { ProductsComponent } from './components/products/products.component';
+import { AuthGuardService } from './AuthGuard.service';
+import { AdvanceComponentComponent } from './components/advance-component/advance-component.component';
 
 export const API_URL = new InjectionToken<string>('');
 
@@ -45,6 +47,7 @@ export const API_URL = new InjectionToken<string>('');
     ErrorComponent,
     RoutingComponent,
     ProductsComponent,
+    AdvanceComponentComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   // providers are injector instance where we register all dependencies which we are required in this application
@@ -58,6 +61,7 @@ export const API_URL = new InjectionToken<string>('');
       multi: true,
     },
     provideHttpClient(withInterceptorsFromDi()),
+    AuthGuardService,
   ],
   bootstrap: [AppComponent],
 })
