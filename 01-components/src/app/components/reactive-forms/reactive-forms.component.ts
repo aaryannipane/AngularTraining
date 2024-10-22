@@ -56,6 +56,8 @@ export class ReactiveFormsComponent implements OnInit , IDeactivateComponent{
         console.log(this.contactForm.status); //Previous status
       });
 
+      
+
     // create separate array object for cities and keep formArray in form group and when check box is checked add it in formArray as form-control same when unchecked remove
     // https://stackoverflow.com/questions/40927167/angular-reactiveforms-producing-an-array-of-checkbox-values
     this.rolesForm = this.formBuilder.group({
@@ -134,6 +136,7 @@ export class ReactiveFormsComponent implements OnInit , IDeactivateComponent{
       },
     };
     this.contactForm.get('country').setValue('1');
+    
     // this.contactForm.setValue(contact, {onlySelf: false, emitEvent: false});
     this.contactForm.setValue(contact);
   }
