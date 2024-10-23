@@ -10,7 +10,7 @@ import { IDeactivateComponent } from '../../AuthGuard.service';
   templateUrl: './reactive-forms.component.html',
   styleUrl: './reactive-forms.component.css',
 })
-export class ReactiveFormsComponent implements OnInit , IDeactivateComponent{
+export class ReactiveFormsComponent implements OnInit, IDeactivateComponent {
   contactForm: any;
   rolesForm: any;
   constructor(private formBuilder: FormBuilder) {}
@@ -48,6 +48,8 @@ export class ReactiveFormsComponent implements OnInit , IDeactivateComponent{
       // takes time to bubble up event so old value to avoid this we can use timeout
       console.log(this.contactForm.value); //still shows the old first name
     });
+
+    // listen for status change of forms firstname control field
     this.contactForm
       .get('firstname')
       .statusChanges.subscribe((newStatus: any) => {
@@ -55,8 +57,6 @@ export class ReactiveFormsComponent implements OnInit , IDeactivateComponent{
         console.log(newStatus);
         console.log(this.contactForm.status); //Previous status
       });
-
-      
 
     // create separate array object for cities and keep formArray in form group and when check box is checked add it in formArray as form-control same when unchecked remove
     // https://stackoverflow.com/questions/40927167/angular-reactiveforms-producing-an-array-of-checkbox-values
@@ -136,7 +136,7 @@ export class ReactiveFormsComponent implements OnInit , IDeactivateComponent{
       },
     };
     this.contactForm.get('country').setValue('1');
-    
+
     // this.contactForm.setValue(contact, {onlySelf: false, emitEvent: false});
     this.contactForm.setValue(contact);
   }
@@ -166,18 +166,18 @@ export class ReactiveFormsComponent implements OnInit , IDeactivateComponent{
     console.log(this.rolesForm.value);
   }
 
-  canExit():boolean{
-    console.log("helloooo");
-    
-    // check if any data filled 
-    if(this.contactForm.dirty){
-      if(confirm("Do you wish to Please confirm")){
-        return true
-      }else{
+  canExit(): boolean {
+    console.log('helloooo');
+
+    // check if any data filled
+    if (this.contactForm.dirty) {
+      if (confirm('Do you wish to Please confirm')) {
+        return true;
+      } else {
         return false;
       }
     }
 
-    return true
+    return true;
   }
 }

@@ -31,12 +31,15 @@ using local variable - {{ child.message }}
 <hr>
 <app-advance-component>
   <header>
-    <p class="text-primary">This text is added by parent using ng-content</p>
+    <p class="text-primary" #para>This text is added by parent using ng-content</p>
   </header>
   <content>
     <p class="text-primary">This is content</p>
   </content>
 </app-advance-component>
 
+
+<hr>
+<app-observables></app-observables>
 
 <div class="mb-5"></div>

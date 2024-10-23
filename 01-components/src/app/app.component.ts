@@ -50,7 +50,9 @@ export class AppComponent {
   }
 
   title = '01-components';
-  parentMessage?: string | undefined = 'message from parent';
+  parentMessage?: string = 'message from parent';
+
+  // we can pass component, element, element property, component services, templateref ... references
   @ViewChild(ComponentCommunicationComponent) child:
     | ComponentCommunicationComponent
     | any;

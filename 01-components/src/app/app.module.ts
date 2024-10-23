@@ -28,6 +28,8 @@ import { RoutingComponent } from './components/routing/routing.component';
 import { ProductsComponent } from './components/products/products.component';
 import { AuthGuardService } from './AuthGuard.service';
 import { AdvanceComponentComponent } from './components/advance-component/advance-component.component';
+import { AppHighlight } from './app-highlight.directive';
+import { ObservablesComponent } from './components/observables/observables.component';
 
 export const API_URL = new InjectionToken<string>('');
 
@@ -37,6 +39,7 @@ export const API_URL = new InjectionToken<string>('');
     HeaderComponent,
     DirectiveComponent,
     ttClassDirective,
+    AppHighlight,
     PipeComponent,
     TempConverterPipe,
     ComponentCommunicationComponent,
@@ -48,6 +51,7 @@ export const API_URL = new InjectionToken<string>('');
     RoutingComponent,
     ProductsComponent,
     AdvanceComponentComponent,
+    ObservablesComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   // providers are injector instance where we register all dependencies which we are required in this application

@@ -23,3 +23,23 @@
 <ng-template #info>
     <p class="bg-info">this is from ng-template</p>
 </ng-template>
+
+
+<h2>Host Binding and Host Listener <a
+        href="https://www.tektutorialshub.com/angular/hostbinding-and-hostlistener-in-angular/#hostbinding-example">Ref</a>
+</h2>
+
+<p appHighLight>This is host element 1</p>
+<p appHighLight>This is host element 2</p>
+
+<hr>
+<h2>view children</h2>
+<input name="firstName" [(ngModel)]="firstName">
+<input name="midlleName" [(ngModel)]="middleName">
+<input name="lastName" [(ngModel)]="lastName">
+
+<button (click)="show()">Show</button>
+
+<hr>
+<h2>ElementRef</h2>
+<div #hello>this has template ref</div>
