@@ -10,13 +10,13 @@ import { HeaderComponent } from './components/header/header.component';
 import { ErrorComponent } from './components/error/error.component';
 import { DirectiveComponent } from './components/directive/directive.component';
 import { PipeComponent } from './components/pipe/pipe.component';
-import { ComponentCommunicationComponent } from './components/component-communication/component-communication.component';
 import { ReactiveFormsComponent } from './components/reactive-forms/reactive-forms.component';
 import { ServicesComponent } from './components/services/services.component';
 import { HttpClientComponent } from './components/http-client/http-client.component';
 import { RoutingComponent } from './components/routing/routing.component';
 import { ProductsComponent } from './components/products/products.component';
 import { AuthGuardService, IDeactivateComponent } from './AuthGuard.service';
+import { RxjsComponent } from './components/rxjs/rxjs.component';
 
 const routes: Routes = [
   {
@@ -30,7 +30,7 @@ const routes: Routes = [
     path: 'form',
     component: ReactiveFormsComponent,
     // using interface
-    // canDeactivate: [AuthGuardService], 
+    // canDeactivate: [AuthGuardService],
 
     // using function (new way)
     canDeactivate: [
@@ -51,8 +51,9 @@ const routes: Routes = [
     children: [{ path: ':id', component: RoutingComponent }], // when we want nested view
     canActivate: [AuthGuardService],
     canActivateChild: [AuthGuardService],
-    resolve: {products: AuthGuardService}
+    resolve: { products: AuthGuardService },
   },
+  { path: 'rxjs', component: RxjsComponent },
   // { path: 'product/:id', component: RoutingComponent }, // when we dont want nested view
   // { path: '', redirectTo: 'header', pathMatch: 'full' },
   {

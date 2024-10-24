@@ -31,6 +31,7 @@ import { AdvanceComponentComponent } from './components/advance-component/advanc
 import { AppHighlight } from './app-highlight.directive';
 import { ObservablesComponent } from './components/observables/observables.component';
 import { SubjectsComponent } from './components/subjects/subjects.component';
+import { RxjsComponent } from './components/rxjs/rxjs.component';
 
 export const API_URL = new InjectionToken<string>('');
 
@@ -54,6 +55,7 @@ export const API_URL = new InjectionToken<string>('');
     AdvanceComponentComponent,
     ObservablesComponent,
     SubjectsComponent,
+    RxjsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   // providers are injector instance where we register all dependencies which we are required in this application

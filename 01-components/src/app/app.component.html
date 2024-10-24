@@ -1,49 +1,91 @@
-<h1>{{title}}</h1>
+<h1>{{ title }}</h1>
 <ul>
   <!-- passing dynamic data  -->
-  <li><a [routerLink]="'/'" [fragment]="'communication'" [state]="{id:2, name: 'angular'}"
-      [routerLinkActive]="['text-success', 'border']" [routerLinkActiveOptions]="{exact: true}">Home</a>
+  <li>
+    <a
+      [routerLink]="'/'"
+      [fragment]="'communication'"
+      [state]="{ id: 2, name: 'angular' }"
+      [routerLinkActive]="['text-success', 'border']"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Home</a
+    >
   </li>
-  <li><a [routerLink]="'directive'" [routerLinkActive]="'text-danger'">directive</a></li>
+  <li>
+    <a [routerLink]="'directive'" [routerLinkActive]="'text-danger'"
+      >directive</a
+    >
+  </li>
   <li><a [routerLink]="'pipe'" [routerLinkActive]="'text-danger'">pipe</a></li>
-  <li><a [routerLink]="'form'" [routerLinkActive]="'text-danger'">reactive form</a></li>
-  <li><a [routerLink]="'services'" [routerLinkActive]="'text-danger'">services</a></li>
-  <li><a [routerLink]="'http'" [replaceUrl]="true" [routerLinkActive]="'text-danger'">http</a></li>
-  <li><a [routerLink]="['product', '1']" [queryParams]="{page:2, color: 'red', sort: 'seller'}"
-      [routerLinkActive]="'text-danger'">product</a></li>
+  <li>
+    <a [routerLink]="'form'" [routerLinkActive]="'text-danger'"
+      >reactive form</a
+    >
+  </li>
+  <li>
+    <a [routerLink]="'services'" [routerLinkActive]="'text-danger'">services</a>
+  </li>
+  <li>
+    <a
+      [routerLink]="'http'"
+      [replaceUrl]="true"
+      [routerLinkActive]="'text-danger'"
+      >http</a
+    >
+  </li>
+  <li>
+    <a
+      [routerLink]="['product', '1']"
+      [queryParams]="{ page: 2, color: 'red', sort: 'seller' }"
+      [routerLinkActive]="'text-danger'"
+      >product</a
+    >
+  </li>
+  <li>
+    <a [routerLink]="['rxjs']" [routerLinkActive]="'text-danger'">rxjs</a>
+  </li>
 </ul>
 
 <h1 *ngIf="isLoading" class="text-warning">Loading...</h1>
 
 <router-outlet></router-outlet>
 
-<hr>
-<hr>
+<hr />
+<hr />
+<h1>Component communication</h1>
 parent input - <input type="text" [(ngModel)]="parentMessage" /> <br />
 child to parent output - {{ parentMessage }} <br />
 using local variable - {{ child.message }}
-<app-component-communication id="communication" [myMessage]="parentMessage" (dataChanged)="dataChangedHandler($event)"
-  #child></app-component-communication>
+<app-component-communication
+  id="communication"
+  [myMessage]="parentMessage"
+  (dataChanged)="dataChangedHandler($event)"
+  #child
+></app-component-communication>
 
 <hr />
 <button (click)="hide()" class="btn btn-primary">Toggle child hide</button>
-<app-life-cycle-hook *ngIf="displayChild" [message]="parentMessage"></app-life-cycle-hook>
+<app-life-cycle-hook
+  *ngIf="displayChild"
+  [message]="parentMessage"
+></app-life-cycle-hook>
 
-<hr>
+<hr />
 <app-advance-component>
   <header>
-    <p class="text-primary" #para>This text is added by parent using ng-content</p>
+    <p class="text-primary" #para>
+      This text is added by parent using ng-content
+    </p>
   </header>
   <content>
     <p class="text-primary">This is content</p>
   </content>
 </app-advance-component>
 
-
-<hr>
+<hr />
 <app-observables></app-observables>
 
-<hr>
+<hr />
 <app-subjects></app-subjects>
 
 <div class="mb-5"></div>
