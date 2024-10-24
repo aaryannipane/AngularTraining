@@ -1,4 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import {
+  Component,
+  VERSION,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { ComponentCommunicationComponent } from './components/component-communication/component-communication.component';
 import { RandomService } from './random.service';
 import {
@@ -16,6 +21,7 @@ import {
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
+  // encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class AppComponent {
   isLoading: boolean = false;
@@ -49,7 +55,7 @@ export class AppComponent {
     });
   }
 
-  title = '01-components';
+  title = `Angular ${VERSION.major}`;
   parentMessage?: string = 'message from parent';
 
   // we can pass component, element, element property, component services, templateref ... references

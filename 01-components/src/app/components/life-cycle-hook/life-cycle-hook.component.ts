@@ -45,7 +45,7 @@ export class LifeCycleHookComponent implements OnInit, OnDestroy, OnChanges, DoC
   // 4
   ngDoCheck(): void {
     // run on every change property / input / bound events in parent and child
-    console.log("childComponent: ngDoCheck");
+    // console.log("childComponent: ngDoCheck");
   }
 
   updateMessage(event:any){

@@ -46,7 +46,7 @@ export class AdvanceComponentComponent
   }
 
   ngDoCheck() {
-    console.log('  ChildComponent==>ngDoCheck');
+    // console.log('  ChildComponent==>ngDoCheck');
   }
 
   ngAfterContentInit(): void {
@@ -55,7 +55,7 @@ export class AdvanceComponentComponent
   }
 
   ngAfterContentChecked() {
-    console.log('  ChildComponent==>ngAfterContentChecked');
+    // console.log('  ChildComponent==>ngAfterContentChecked');
   }
 
   ngAfterViewInit(): void {
@@ -98,7 +98,7 @@ export class AdvanceComponentComponent
   }
 
   ngAfterViewChecked() {
-    console.log('  ChildComponent==>AfterViewChecked');
+    // console.log('  ChildComponent==>AfterViewChecked');
   }
 
   show() {

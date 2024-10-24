@@ -30,6 +30,7 @@ import { AuthGuardService } from './AuthGuard.service';
 import { AdvanceComponentComponent } from './components/advance-component/advance-component.component';
 import { AppHighlight } from './app-highlight.directive';
 import { ObservablesComponent } from './components/observables/observables.component';
+import { SubjectsComponent } from './components/subjects/subjects.component';
 
 export const API_URL = new InjectionToken<string>('');
 
@@ -52,6 +53,7 @@ export const API_URL = new InjectionToken<string>('');
     ProductsComponent,
     AdvanceComponentComponent,
     ObservablesComponent,
+    SubjectsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   // providers are injector instance where we register all dependencies which we are required in this application

@@ -1,12 +1,11 @@
 <hr />
-<h1>2. Directives</h1>
+<h1>2. Directives <a href="https://www.tektutorialshub.com/angular/angular-directives/">Ref</a></h1>
 <hr />
 <!-- *ngFor structural directive - https://www.tektutorialshub.com/angular/angular-ngfor-directive/ -->
 <h2>> *ngFor structural directive</h2>
 <h3>{{ title }}</h3>
 <ul>
-  <li
-    *ngFor="
+  <li *ngFor="
       let movie of movies;
       trackBy: trackByFn;
       let i = index;
@@ -14,9 +13,7 @@
       let e = even;
       let first = first;
       let last = last
-    "
-    [ngClass]="{ odd: o, even: e, first: first, last: last }"
-  >
+    " [ngClass]="{ odd: o, even: e, first: first, last: last }">
     {{ movie.title }} {{ movie.director }} - {{ i }}
   </li>
 </ul>
@@ -64,5 +61,3 @@ enter color name: <input type="text" [(ngModel)]="color" />
 <hr>
 <h2>> Custom directive <span class="text-danger badge">(not completed)</span></h2>
 <button [ttClass]="'btn'">Submit</button>
-
-
