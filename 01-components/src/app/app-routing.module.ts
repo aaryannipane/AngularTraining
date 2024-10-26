@@ -54,7 +54,7 @@ const routes: Routes = [
     resolve: { products: AuthGuardService },
   },
   { path: 'rxjs', component: RxjsComponent },
-  // { path: 'product/:id', component: RoutingComponent }, // when we dont want nested view
+  // { path: 'product/:id', component: RoutingComponent }, // when we don't want nested view
   // { path: '', redirectTo: 'header', pathMatch: 'full' },
   {
     path: '',

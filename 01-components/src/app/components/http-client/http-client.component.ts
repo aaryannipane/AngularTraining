@@ -37,6 +37,8 @@ export class HttpClientComponent {
           this.loading = false;
         },
       });
+
+    console.log('aryan nipane');
   }
 
   postData() {

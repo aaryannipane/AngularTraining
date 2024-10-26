@@ -1,4 +1,7 @@
 <h1>6. Reactive-forms <a href="https://www.tektutorialshub.com/angular/angular-forms-fundamentals/">Ref</a></h1>
+
+
+
 <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
 
     <div class="form-group">
@@ -34,7 +37,7 @@
     </div>
 
     <div class="form-group">
-        <label for="gender">Geneder </label><br>
+        <label for="gender">Gender </label><br>
         <input type="radio" value="male" id="gender" name="gender" formControlName="gender"> Male
         <input type="radio" value="female" id="gender" name="gender" formControlName="gender"> Female
     </div>
@@ -57,7 +60,7 @@
 
         <div class="form-group">
             <label for="pincode">Pin Code</label>
-            <input type="text" class="form-control" name="pincode" formControlName="pincode">
+            <input type="number" class="form-control" name="pincode" formControlName="pincode">
             <div *ngIf="!pincode.valid && (pincode.dirty ||pincode.touched)">
                 <div *ngIf="pincode.errors.gte" class="text-danger">
                     The number should be greater than {{pincode.errors.requiredValue}}

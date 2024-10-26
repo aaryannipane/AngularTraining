@@ -72,5 +72,6 @@ export const API_URL = new InjectionToken<string>('');
     AuthGuardService,
   ],
   bootstrap: [AppComponent],
+  // bootstrap: [ReactiveFormsComponent],
 })
 export class AppModule {}

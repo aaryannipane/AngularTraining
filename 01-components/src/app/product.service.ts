@@ -7,7 +7,7 @@ import { delay, Observable, of } from 'rxjs';
 @Injectable()
 export class ProductService {
   constructor(private logger: LoggerService) {
-    logger.log('logger initialised');
+    logger.log('logger initialized');
   }
   public getProducts(): Observable<Product[]> {
     this.logger.log('product get called');

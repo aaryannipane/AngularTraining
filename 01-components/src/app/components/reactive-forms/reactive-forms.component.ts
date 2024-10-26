@@ -37,7 +37,7 @@ export class ReactiveFormsComponent implements OnInit, IDeactivateComponent {
         city: ['', [Validators.required]],
         street: ['', [Validators.required]],
         // pincode: ['', [Validators.required, gte(20)]],
-        pincode: ['', [Validators.required], [gteAsync]],
+        pincode: [null, [Validators.required], [gteAsync]],
       }),
     });
 
@@ -160,6 +160,7 @@ export class ReactiveFormsComponent implements OnInit, IDeactivateComponent {
   onSubmit() {
     console.log('form submit');
     console.log(this.contactForm.value);
+    console.log(this.contactForm.getRawValue());
     console.log(this.contactForm.get('firstname').errors);
   }
   onRoleSubmit() {
@@ -167,8 +168,6 @@ export class ReactiveFormsComponent implements OnInit, IDeactivateComponent {
   }
 
   canExit(): boolean {
-    console.log('helloooo');
-
     // check if any data filled
     if (this.contactForm.dirty) {
       if (confirm('Do you wish to Please confirm')) {

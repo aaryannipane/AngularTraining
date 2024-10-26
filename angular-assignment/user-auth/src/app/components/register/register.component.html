@@ -1,0 +1,131 @@
+<div class="container">
+    <h1>Registration Form</h1>
+    <hr>
+    <p class="help-block">All fields marked with "<span style="color: #d9534f;">*</span>" are required.</p>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="row">
+
+            <div class="form-group col-md-6"
+                [ngClass]="{'has-error ':(!firstName?.valid && (firstName?.dirty ||firstName?.touched))}">
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" placeholder="First Name"
+                    formControlName="firstName">
+                <div *ngIf="!firstName?.valid && (firstName?.dirty ||firstName?.touched)" class="text-danger">
+                    <div [hidden]="!firstName?.errors?.['required']">
+                        First Name is required
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-6"
+                [ngClass]="{'has-error ':(!lastName?.valid && (lastName?.dirty ||lastName?.touched))}">
+                <label for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" placeholder="Last Name"
+                    formControlName="lastName">
+                <div *ngIf="!lastName?.valid && (lastName?.dirty || lastName?.touched)" class="text-danger">
+                    <div [hidden]="!lastName?.errors?.['required']">Last Name is required</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" [ngClass]="{'has-error ':(!username?.valid && (username?.dirty ||username?.touched))}">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" placeholder="Username" formControlName="username">
+            <div *ngIf="!username?.valid && (username?.dirty || username?.touched)" class="text-danger">
+                <div [hidden]="!username?.errors?.['required']">Username is required</div>
+            </div>
+        </div>
+        <div class="form-group" [ngClass]="{'has-error ':(!email?.valid && (email?.dirty ||email?.touched))}">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Email" formControlName="email">
+            <div *ngIf="!email?.valid && (email?.dirty || email?.touched)" class="text-danger">
+                <div [hidden]="!email?.errors?.['required']">Email is required</div>
+            </div>
+        </div>
+        <div formGroupName="passwords">
+            <div class="form-group"
+                [ngClass]="{'has-error ':(!password?.valid && (password?.dirty ||password?.touched))}">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Password"
+                    formControlName="password">
+                <div *ngIf="!password?.valid && (password?.dirty || password?.touched)" class="text-danger">
+                    <div [hidden]="!password?.errors?.['required']">Password is required</div>
+                    <div [hidden]="!password?.errors?.['pattern']">Password must be at least 4 characters long and
+                        include one uppercase letter, one lowercase letter, one number, and one special character.</div>
+                </div>
+            </div>
+            <div class="form-group"
+                [ngClass]="{'has-error ':((!confirmPassword?.valid || passwords?.errors?.['noMatch']) && (confirmPassword?.dirty ||confirmPassword?.touched))}">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password"
+                    formControlName="confirmPassword">
+                <div *ngIf="(!confirmPassword?.valid || passwords?.errors?.['noMatch']) && (confirmPassword?.dirty || confirmPassword?.touched)"
+                    class="text-danger">
+                    <div [hidden]="!confirmPassword?.errors?.['required']">Confirm Password is required</div>
+                    <div [hidden]="!(!confirmPassword?.errors?.['required'] && passwords?.errors?.['noMatch'])">Passwords don't match.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="dob">Date of Birth</label>
+            <input type="date" class="form-control" id="dob" placeholder="Confirm Password" formControlName="dob">
+        </div>
+        <div class="form-group">
+            <Label>Gender</Label>
+            <br>
+            <label for="exampleInputPassword1" class="radio-inline"><input type="radio"
+                    formControlName="gender">Male</label>
+            <label for="exampleInputPassword1" class="radio-inline"><input type="radio"
+                    formControlName="gender">Female</label>
+        </div>
+        <div class="form-group">
+            <Label>State</Label>
+            <select class="form-control">
+                <option value="">select state</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <Label>City</Label>
+            <select class="form-control">
+                <option value="">select city</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputFile">Profile Image</label>
+            <input type="file" id="exampleInputFile">
+            <!-- <p class="help-block">Example block-level help text here.</p> -->
+        </div>
+        <div class="form-group">
+            <label>Roles</label>
+            <br>
+            <label class="checkbox-inline">
+                <input type="checkbox"> Admin
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox"> Seller
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox"> Buyer
+            </label>
+        </div>
+        <div class="">
+
+            <button type="submit" class="btn btn-primary">Register</button>
+
+            <button type="button" class="btn btn-default" style="margin-left: 5px;">Reset</button>
+
+        </div>
+    </form>
+</div>
