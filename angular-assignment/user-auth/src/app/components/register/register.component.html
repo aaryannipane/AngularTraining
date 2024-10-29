@@ -61,64 +61,80 @@
                 <div *ngIf="(!confirmPassword?.valid || passwords?.errors?.['noMatch']) && (confirmPassword?.dirty || confirmPassword?.touched)"
                     class="text-danger">
                     <div [hidden]="!confirmPassword?.errors?.['required']">Confirm Password is required</div>
-                    <div [hidden]="!(!confirmPassword?.errors?.['required'] && passwords?.errors?.['noMatch'])">Passwords don't match.
+                    <div [hidden]="!(!confirmPassword?.errors?.['required'] && passwords?.errors?.['noMatch'])">
+                        Passwords don't match.
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" [ngClass]="{'has-error ':(!dob?.valid && (dob?.dirty ||dob?.touched))}">
             <label for="dob">Date of Birth</label>
-            <input type="date" class="form-control" id="dob" placeholder="Confirm Password" formControlName="dob">
+            <input type="date" class="form-control" id="dob" placeholder="Confirm Password" formControlName="dob"
+                [max]="currentDate">
+            <div *ngIf="!dob?.valid && (dob?.dirty || dob?.touched)" class="text-danger">
+                <div [hidden]="!dob?.errors?.['required']">Dob is required</div>
+            </div>
         </div>
         <div class="form-group">
             <Label>Gender</Label>
             <br>
-            <label for="exampleInputPassword1" class="radio-inline"><input type="radio"
-                    formControlName="gender">Male</label>
-            <label for="exampleInputPassword1" class="radio-inline"><input type="radio"
-                    formControlName="gender">Female</label>
+            <label for="male" class="radio-inline"><input type="radio" formControlName="gender" id="male"
+                    value="male">Male</label>
+            <label for="female" class="radio-inline"><input type="radio" formControlName="gender" id="female"
+                    value="female">Female</label>
+            <div *ngIf="!gender?.valid && (gender?.dirty || gender?.touched)" class="text-danger">
+                <div [hidden]="!gender?.errors?.['required']">Gender is required</div>
+            </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" [ngClass]="{'has-error ':(!state?.valid && (state?.dirty ||state?.touched))}">
             <Label>State</Label>
-            <select class="form-control">
+            <select class="form-control" formControlName="state">
                 <option value="">select state</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+                <option value="MH">MH</option>
+                <option value="DH">DH</option>
             </select>
+            <div *ngIf="!state?.valid && (state?.dirty || state?.touched)" class="text-danger">
+                <div [hidden]="!state?.errors?.['required']">State is required</div>
+            </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" [ngClass]="{'has-error ':(!city?.valid && (city?.dirty ||city?.touched))}">
             <Label>City</Label>
-            <select class="form-control">
+            <select class="form-control" formControlName="city">
                 <option value="">select city</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+                <option value="mumbai">mumbai</option>
+                <option value="pune">pune</option>
             </select>
+            <div *ngIf="!city?.valid && (city?.dirty || city?.touched)" class="text-danger">
+                <div [hidden]="!city?.errors?.['required']">City is required</div>
+            </div>
         </div>
 
         <div class="form-group">
             <label for="exampleInputFile">Profile Image</label>
             <input type="file" id="exampleInputFile">
             <!-- <p class="help-block">Example block-level help text here.</p> -->
+            <div *ngIf="!image?.valid && (image?.dirty || image?.touched)" class="text-danger">
+                <div [hidden]="!image?.errors?.['required']">Image is required</div>
+            </div>
         </div>
+
+        <p>{{roles?.errors}}</p>
         <div class="form-group">
             <label>Roles</label>
             <br>
-            <label class="checkbox-inline">
+            <!-- <label class="checkbox-inline" formArrayName="roles">
                 <input type="checkbox"> Admin
             </label>
-            <label class="checkbox-inline">
+            <label class="checkbox-inline" formArrayName="roles">
                 <input type="checkbox"> Seller
             </label>
-            <label class="checkbox-inline">
+            <label class="checkbox-inline" formArrayName="roles">
                 <input type="checkbox"> Buyer
-            </label>
+            </label> -->
+
+            
+
         </div>
         <div class="">
 

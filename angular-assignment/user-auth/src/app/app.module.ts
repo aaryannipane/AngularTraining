@@ -9,7 +9,6 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NewComponent } from './components/newComponent/newComponent.component';
 
 @NgModule({
   declarations: [
@@ -18,8 +17,7 @@ import { NewComponent } from './components/newComponent/newComponent.component';
     RegisterComponent,
     LoginComponent,
     DashboardComponent,
-    FooterComponent,
-    NewComponent
+    FooterComponent
   ],
   imports: [
     BrowserModule,

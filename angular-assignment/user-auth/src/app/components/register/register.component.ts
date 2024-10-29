@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { matchPassword } from '../../validators/matchPassword.validator';
+import { roleRequired } from '../../validators/roleRequired.validator';
 
 @Component({
   selector: 'app-register',
@@ -9,6 +10,9 @@ import { matchPassword } from '../../validators/matchPassword.validator';
 })
 export class RegisterComponent implements OnInit, AfterViewInit {
   registerForm!: FormGroup;
+  currentDate = new Date().toISOString().split('T')[0];
+  rolesDB: string[] = ['admin', 'seller', 'buyer'];
+
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
@@ -34,14 +38,22 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       state: ['', [Validators.required]],
       city: ['', [Validators.required]],
       image: ['', [Validators.required]],
-      roles: this.fb.group({
-        admin: false,
-        seller: false,
-        buyer: false,
-      }),
+      roles: this.fb.array([], [roleRequired]),
+      // roles: this.fb.group({
+      //   admin: false,
+      //   seller: false,
+      //   buyer: false,
+      // }),
     });
 
     this.registerForm.get('passwords')?.setValidators([matchPassword]);
+    // this.registerForm.get('roles')?.setValidators([roleRequired]);
+
+    let formRoles = this.registerForm.get('roles') as FormArray;
+
+    this.rolesDB.forEach((elm) => {
+      formRoles.push(this.fb.control(false));
+    });
   }
 
   ngAfterViewInit(): void {}
@@ -67,6 +79,24 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   get confirmPassword() {
     return this.registerForm.get('passwords')?.get('confirmPassword');
   }
+  get dob() {
+    return this.registerForm.get('dob');
+  }
+  get gender() {
+    return this.registerForm.get('gender');
+  }
+  get state() {
+    return this.registerForm.get('state');
+  }
+  get city() {
+    return this.registerForm.get('city');
+  }
+  get image() {
+    return this.registerForm.get('image');
+  }
+  get roles() {
+    return this.registerForm.get('roles');
+  }
 
   validateAllFormFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach((field) => {
@@ -74,6 +104,14 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
       if (field === 'passwords') {
         console.log('get passwords ');
+        const password = formGroup.get(field)?.get('password');
+        const confirmPassword = formGroup.get(field)?.get('confirmPassword');
+
+        password?.markAsTouched({ onlySelf: true });
+        password?.updateValueAndValidity();
+
+        confirmPassword?.markAsTouched({ onlySelf: true });
+        confirmPassword?.updateValueAndValidity();
       }
 
       const control = formGroup.get(field);
