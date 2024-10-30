@@ -9,5 +9,6 @@ namespace user_auth_backend.Models.Roles
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public bool IsSelected { get; set; }
     }
 }
