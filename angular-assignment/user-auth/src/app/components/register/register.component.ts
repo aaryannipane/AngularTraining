@@ -1,7 +1,18 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  Renderer2,
+  ViewChild,
+  viewChild,
+} from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { matchPassword } from '../../validators/matchPassword.validator';
 import { roleRequired } from '../../validators/roleRequired.validator';
+import { dobValidator } from '../../validators/dob.validator';
+import { RegistrationService } from '../../services/registration.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -11,11 +22,31 @@ import { roleRequired } from '../../validators/roleRequired.validator';
 export class RegisterComponent implements OnInit, AfterViewInit {
   registerForm!: FormGroup;
   currentDate = new Date().toISOString().split('T')[0];
-  rolesDB: string[] = ['admin', 'seller', 'buyer'];
+  rolesDB: any = [];
+  states: any = [];
+  citys: any = [];
+  profileImageFile: any;
 
-  constructor(private fb: FormBuilder) {}
+  @ViewChild('profileImg') imgElm!: ElementRef;
 
-  ngOnInit(): void {
+  constructor(
+    private fb: FormBuilder,
+    private registrationService: RegistrationService,
+    private renderer: Renderer2
+  ) {
+    this.registrationService.getStates().subscribe({
+      next: (data) => {
+        this.states = data as Array<any>;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('complete');
+      },
+    });
+
+    // -------
     this.registerForm = this.fb.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
@@ -33,30 +64,50 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         ],
         confirmPassword: ['', [Validators.required]],
       }),
-      dob: [null, [Validators.required]],
+      dob: [null, [Validators.required, dobValidator]],
       gender: ['', [Validators.required]],
-      state: ['', [Validators.required]],
-      city: ['', [Validators.required]],
+      state: [null, [Validators.required]],
+      city: [null, [Validators.required]],
       image: ['', [Validators.required]],
       roles: this.fb.array([], [roleRequired]),
-      // roles: this.fb.group({
-      //   admin: false,
-      //   seller: false,
-      //   buyer: false,
-      // }),
     });
 
     this.registerForm.get('passwords')?.setValidators([matchPassword]);
     // this.registerForm.get('roles')?.setValidators([roleRequired]);
 
-    let formRoles = this.registerForm.get('roles') as FormArray;
+    this.registerForm.get('city')?.disable();
 
-    this.rolesDB.forEach((elm) => {
-      formRoles.push(this.fb.control(false));
+    this.registrationService.getRoles().subscribe({
+      next: (data) => {
+        let formRoles = this.registerForm.get('roles') as FormArray;
+        this.rolesDB = data as Array<any>;
+        this.rolesDB.forEach((elm: any) => {
+          formRoles.push(this.fb.control(false));
+        });
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('roles req complete');
+      },
     });
   }
 
-  ngAfterViewInit(): void {}
+  // observable to promise
+  async getRoles() {
+    await lastValueFrom(this.registrationService.getRoles());
+  }
+
+  ngOnInit(): void {}
+
+  ngAfterViewInit(): void {
+    this.image?.valueChanges.subscribe({
+      next: (data) => {
+        console.log(data);
+      },
+    });
+  }
 
   get firstName() {
     return this.registerForm.get('firstName');
@@ -95,15 +146,12 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     return this.registerForm.get('image');
   }
   get roles() {
-    return this.registerForm.get('roles');
+    return this.registerForm.get('roles') as FormArray;
   }
 
   validateAllFormFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach((field) => {
-      console.log(field);
-
       if (field === 'passwords') {
-        console.log('get passwords ');
         const password = formGroup.get(field)?.get('password');
         const confirmPassword = formGroup.get(field)?.get('confirmPassword');
 
@@ -120,10 +168,85 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     });
   }
 
-  onSubmit() {
-    console.log('asd');
+  onStateChange(event: Event) {
+    if (!isNaN(this.state?.value)) {
+      this.registrationService.getCitys(this.state?.value).subscribe({
+        next: (data) => {
+          this.citys = data as Array<any>;
+          this.city?.enable();
+          this.city?.reset();
+        },
+        error: (err) => {
+          console.log(err);
+          this.city?.disable();
+        },
+        complete: () => {
+          console.log('city req complete');
+        },
+      });
+    }
+  }
 
+  onFileChange(event: Event) {
+    if (this.image?.valid) {
+      const element = event.currentTarget as HTMLInputElement;
+      this.profileImageFile = element?.files?.[0];
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        var dataUrl = reader.result;
+        this.renderer.setAttribute(
+          this.imgElm.nativeElement,
+          'src',
+          dataUrl?.toString() ?? ''
+        );
+      };
+
+      reader.readAsDataURL(this.profileImageFile);
+    }
+  }
+
+  removeImg(event: Event) {
+    this.image?.patchValue('');
+  }
+
+  onSubmit() {
     this.validateAllFormFields(this.registerForm);
-    console.log(this.registerForm.valid);
+
+    if (this.registerForm.valid) {
+      // create form data and fill value
+      let fd = new FormData();
+      Object.keys(this.registerForm.controls).forEach((key) => {
+        console.log(key);
+
+        if (key === 'passwords') {
+          fd.append('password', this.password?.value);
+        } else if (key === 'image') {
+          fd.append(key, this.profileImageFile);
+        } else {
+          fd.append(key, this.registerForm.get(key)?.value);
+        }
+      });
+
+      this.registrationService.registerUser(fd).subscribe({
+        next: (data) => {
+          console.log(data);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('register user complete');
+        },
+      });
+
+      console.log(fd);
+    }
+    console.log('form valid', this.registerForm.valid);
+  }
+
+  onReset() {
+    this.registerForm.reset();
+    this.city?.disable();
   }
 }

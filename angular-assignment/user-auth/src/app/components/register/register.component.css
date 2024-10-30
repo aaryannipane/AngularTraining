@@ -1,0 +1,14 @@
+
+.img-display-container{
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.profile-display-image {
+  display: block;
+  width: 100%;
+  object-fit: contain;
+  aspect-ratio: 1/1;
+}

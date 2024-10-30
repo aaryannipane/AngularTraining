@@ -7,9 +7,9 @@ export function roleRequired(
 
   //   console.log(Object.values(control.value).includes(true));
 
-  //     if (!Object.values(control.value).includes(true)) {
-  //       return { noMatch: true };
-  //     }
+      if (!control.value.includes(true)) {
+        return { noMatch: true };
+      }
 
   return null;
 }

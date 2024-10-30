@@ -9,6 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -17,17 +18,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     RegisterComponent,
     LoginComponent,
     DashboardComponent,
-    FooterComponent
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  providers: [
-    
-  ],
-  bootstrap: [AppComponent]
+  providers: [provideHttpClient()],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

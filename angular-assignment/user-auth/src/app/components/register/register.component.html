@@ -28,14 +28,15 @@
             </div>
         </div>
         <div class="form-group" [ngClass]="{'has-error ':(!username?.valid && (username?.dirty ||username?.touched))}">
-            <label for="username">Username</label>
+            <!-- TODO:  (check if same Username, Email exist-->
+            <label for="username">Username <span class="text-danger">(check if same Username exist)</span></label>
             <input type="text" class="form-control" id="username" placeholder="Username" formControlName="username">
             <div *ngIf="!username?.valid && (username?.dirty || username?.touched)" class="text-danger">
                 <div [hidden]="!username?.errors?.['required']">Username is required</div>
             </div>
         </div>
         <div class="form-group" [ngClass]="{'has-error ':(!email?.valid && (email?.dirty ||email?.touched))}">
-            <label for="email">Email</label>
+            <label for="email">Email <span class="text-danger">(check if same Email exist)</span></label>
             <input type="email" class="form-control" id="email" placeholder="Email" formControlName="email">
             <div *ngIf="!email?.valid && (email?.dirty || email?.touched)" class="text-danger">
                 <div [hidden]="!email?.errors?.['required']">Email is required</div>
@@ -73,7 +74,9 @@
             <input type="date" class="form-control" id="dob" placeholder="Confirm Password" formControlName="dob"
                 [max]="currentDate">
             <div *ngIf="!dob?.valid && (dob?.dirty || dob?.touched)" class="text-danger">
-                <div [hidden]="!dob?.errors?.['required']">Dob is required</div>
+                <div [hidden]="!dob?.errors?.['required']">Date of Birth is required</div>
+                <div [hidden]="!dob?.errors?.['noMatch']">Date of Birth cannot be in the future. Please enter a valid
+                    date.</div>
             </div>
         </div>
         <div class="form-group">
@@ -89,10 +92,11 @@
         </div>
         <div class="form-group" [ngClass]="{'has-error ':(!state?.valid && (state?.dirty ||state?.touched))}">
             <Label>State</Label>
-            <select class="form-control" formControlName="state">
-                <option value="">select state</option>
-                <option value="MH">MH</option>
-                <option value="DH">DH</option>
+            <select class="form-control" formControlName="state" (change)="onStateChange($event)">
+                <option value="null" disabled>select state</option>
+                <ng-container *ngFor="let state of states">
+                    <option [value]="state.Id" class="text-capitalize">{{state.Name}}</option>
+                </ng-container>
             </select>
             <div *ngIf="!state?.valid && (state?.dirty || state?.touched)" class="text-danger">
                 <div [hidden]="!state?.errors?.['required']">State is required</div>
@@ -101,46 +105,52 @@
         <div class="form-group" [ngClass]="{'has-error ':(!city?.valid && (city?.dirty ||city?.touched))}">
             <Label>City</Label>
             <select class="form-control" formControlName="city">
-                <option value="">select city</option>
-                <option value="mumbai">mumbai</option>
-                <option value="pune">pune</option>
+                <option value="null" disabled>select city</option>
+                <ng-container *ngFor="let city of citys">
+                    <option [value]="city.Id" class="text-capitalize">{{city.Name}}</option>
+                </ng-container>
             </select>
             <div *ngIf="!city?.valid && (city?.dirty || city?.touched)" class="text-danger">
                 <div [hidden]="!city?.errors?.['required']">City is required</div>
             </div>
         </div>
 
-        <div class="form-group">
+
+
+        <div class="form-group" *ngIf="!image?.valid ; else elseBlock">
             <label for="exampleInputFile">Profile Image</label>
-            <input type="file" id="exampleInputFile">
+            <input type="file" id="exampleInputFile" formControlName="image" (change)="onFileChange($event)" >
             <!-- <p class="help-block">Example block-level help text here.</p> -->
             <div *ngIf="!image?.valid && (image?.dirty || image?.touched)" class="text-danger">
                 <div [hidden]="!image?.errors?.['required']">Image is required</div>
             </div>
         </div>
 
-        <p>{{roles?.errors}}</p>
+        <ng-template #elseBlock>
+            <div class="img-display-container">
+                <img src="" class="profile-display-image" alt="profile image" #profileImg>
+                <button type="button" class="btn btn-default" (click)="removeImg($event)">Remove Image</button>
+            </div>
+        </ng-template>
+
         <div class="form-group">
             <label>Roles</label>
             <br>
-            <!-- <label class="checkbox-inline" formArrayName="roles">
-                <input type="checkbox"> Admin
-            </label>
-            <label class="checkbox-inline" formArrayName="roles">
-                <input type="checkbox"> Seller
-            </label>
-            <label class="checkbox-inline" formArrayName="roles">
-                <input type="checkbox"> Buyer
-            </label> -->
-
-            
-
+            <ng-container formArrayName="roles">
+                <ng-container *ngFor="let role of roles.controls; let i = index;">
+                    <label [for]="rolesDB[i].Name" class="checkbox-inline"><input type="checkbox" [id]="rolesDB[i].Name"
+                            [formControlName]="i">{{rolesDB[i].Name}}</label>
+                </ng-container>
+            </ng-container>
+            <div *ngIf="!roles?.valid && (roles?.dirty || roles?.touched)" class="text-danger">
+                <div [hidden]="!roles.errors?.['noMatch']">At least one role is required</div>
+            </div>
         </div>
         <div class="">
 
             <button type="submit" class="btn btn-primary">Register</button>
 
-            <button type="button" class="btn btn-default" style="margin-left: 5px;">Reset</button>
+            <button type="button" class="btn btn-default" style="margin-left: 5px;" (click)="onReset()">Reset</button>
 
         </div>
     </form>
