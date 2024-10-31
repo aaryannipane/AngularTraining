@@ -19,22 +19,6 @@ namespace user_auth_backend.Models.User
         public int State { get; set; }
         public int City { get; set; }
         public string ProfileImage { get; set; }
-        public List<Role> Roles { get; set; } = new List<Role>() { new Role()
-        {
-            Id = 1,
-            Name = "admin",
-            IsSelected = false
-        } , new Role()
-        {
-             Id = 2,
-            Name = "seller",
-            IsSelected = false
-        }, new Role()
-        {
-             Id = 3,
-            Name = "buyer",
-            IsSelected = false
-        }
-        };
+        public List<Role> Roles { get; set; }
     }
 }

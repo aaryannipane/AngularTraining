@@ -2,44 +2,25 @@
 <ul>
   <!-- passing dynamic data  -->
   <li>
-    <a
-      [routerLink]="'/'"
-      [fragment]="'communication'"
-      [state]="{ id: 2, name: 'angular' }"
-      [routerLinkActive]="['text-success', 'border']"
-      [routerLinkActiveOptions]="{ exact: true }"
-      >Home</a
-    >
+    <a [routerLink]="'/'" [fragment]="'communication'" [state]="{ id: 2, name: 'angular' }"
+      [routerLinkActive]="['text-success', 'border']" [routerLinkActiveOptions]="{ exact: true }">Home</a>
   </li>
   <li>
-    <a [routerLink]="'directive'" [routerLinkActive]="'text-danger'"
-      >directive</a
-    >
+    <a [routerLink]="'directive'" [routerLinkActive]="'text-danger'">directive</a>
   </li>
   <li><a [routerLink]="'pipe'" [routerLinkActive]="'text-danger'">pipe</a></li>
   <li>
-    <a [routerLink]="'form'" [routerLinkActive]="'text-danger'"
-      >reactive form</a
-    >
+    <a [routerLink]="'form'" [routerLinkActive]="'text-danger'">reactive form</a>
   </li>
   <li>
-    <a [routerLink]="'services'" [routerLinkActive]="'text-danger'">services</a>
+    <a [routerLink]="'services'" [routerLinkActive]="'text-danger'" [queryParams]="{ rollNo: 2, color: 'red', sort: 'seller' }" [queryParamsHandling]="'merge'">services</a>
   </li>
   <li>
-    <a
-      [routerLink]="'http'"
-      [replaceUrl]="true"
-      [routerLinkActive]="'text-danger'"
-      >http</a
-    >
+    <a [routerLink]="'http'" [replaceUrl]="true" [routerLinkActive]="'text-danger'">http</a>
   </li>
   <li>
-    <a
-      [routerLink]="['product', '1']"
-      [queryParams]="{ page: 2, color: 'red', sort: 'seller' }"
-      [routerLinkActive]="'text-danger'"
-      >product</a
-    >
+    <a [routerLink]="['product', '1']" [queryParams]="{ page: 2, color: 'red', sort: 'seller' }"
+      [routerLinkActive]="'text-danger'">product</a>
   </li>
   <li>
     <a [routerLink]="['rxjs']" [routerLinkActive]="'text-danger'">rxjs</a>
@@ -56,19 +37,12 @@
 parent input - <input type="text" [(ngModel)]="parentMessage" /> <br />
 child to parent output - {{ parentMessage }} <br />
 using local variable - {{ child.message }}
-<app-component-communication
-  id="communication"
-  [myMessage]="parentMessage"
-  (dataChanged)="dataChangedHandler($event)"
-  #child
-></app-component-communication>
+<app-component-communication id="communication" [myMessage]="parentMessage" (dataChanged)="dataChangedHandler($event)"
+  #child></app-component-communication>
 
 <hr />
 <button (click)="hide()" class="btn btn-primary">Toggle child hide</button>
-<app-life-cycle-hook
-  *ngIf="displayChild"
-  [message]="parentMessage"
-></app-life-cycle-hook>
+<app-life-cycle-hook *ngIf="displayChild" [message]="parentMessage"></app-life-cycle-hook>
 
 <hr />
 <app-advance-component>

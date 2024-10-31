@@ -119,7 +119,7 @@
 
         <div class="form-group" *ngIf="!image?.valid ; else elseBlock">
             <label for="exampleInputFile">Profile Image</label>
-            <input type="file" id="exampleInputFile" formControlName="image" (change)="onFileChange($event)" >
+            <input type="file" id="exampleInputFile" formControlName="image" (change)="onFileChange($event)">
             <!-- <p class="help-block">Example block-level help text here.</p> -->
             <div *ngIf="!image?.valid && (image?.dirty || image?.touched)" class="text-danger">
                 <div [hidden]="!image?.errors?.['required']">Image is required</div>
@@ -148,10 +148,10 @@
         </div>
         <div class="">
 
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit" class="btn btn-primary" [disabled]="isSubmit">Register</button>
 
             <button type="button" class="btn btn-default" style="margin-left: 5px;" (click)="onReset()">Reset</button>
-
+            <button (click)="getRoles()">promise call</button>
         </div>
     </form>
 </div>

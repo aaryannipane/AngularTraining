@@ -26,6 +26,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   states: any = [];
   citys: any = [];
   profileImageFile: any;
+  isSubmit: boolean = false;
 
   @ViewChild('profileImg') imgElm!: ElementRef;
 
@@ -96,7 +97,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   // observable to promise
   async getRoles() {
-    await lastValueFrom(this.registrationService.getRoles());
+    let roles = await lastValueFrom(this.registrationService.getRoles());
+    console.log(roles);
   }
 
   ngOnInit(): void {}
@@ -223,20 +225,34 @@ export class RegisterComponent implements OnInit, AfterViewInit {
           fd.append('password', this.password?.value);
         } else if (key === 'image') {
           fd.append(key, this.profileImageFile);
+        } else if (key === 'roles') {
+          let userSelectedRoles = this.registerForm.get('roles') as FormArray;
+          this.rolesDB.forEach((el: any, idx: number) => {
+            this.rolesDB[idx].IsSelected = userSelectedRoles.at(idx).value;
+          });
+          fd.append(key, JSON.stringify(this.rolesDB));
         } else {
           fd.append(key, this.registerForm.get(key)?.value);
         }
       });
 
+      fd.append(
+        'rolesCustom',
+        JSON.stringify({ admin: true, seller: false, buyer: false })
+      );
+
+      this.isSubmit = true;
       this.registrationService.registerUser(fd).subscribe({
         next: (data) => {
           console.log(data);
         },
         error: (err) => {
           console.log(err);
+          this.isSubmit = false;
         },
         complete: () => {
           console.log('register user complete');
+          // this.isSubmit = false;`
         },
       });
 

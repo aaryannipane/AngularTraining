@@ -1,13 +1,18 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Security;
+using user_auth_backend.Models.Roles;
 using user_auth_backend.Models.User;
+using user_auth_backend.Repository;
 
 namespace user_auth_backend.Controllers
 {
@@ -34,25 +39,22 @@ namespace user_auth_backend.Controllers
             Debug.WriteLine(HttpContext.Current.Request.Files[0].FileName);
 
 
-            string root = HttpContext.Current.Server.MapPath("~/App_Data");
 
-            var provider = new MultipartFormDataStreamProvider(root);
-
+            Trace.WriteLine(HttpContext.Current.Request.Form["firstname"]);
 
 
             try
             {
-                await Request.Content.ReadAsMultipartAsync(provider);
-                string firstName = provider.FormData.GetValues("firstname")?.FirstOrDefault();
-                string lastName = provider.FormData.GetValues("lastname")?.FirstOrDefault();
-                string username = provider.FormData.GetValues("username")?.FirstOrDefault();
-                string email = provider.FormData.GetValues("email")?.FirstOrDefault();
-                string password = provider.FormData.GetValues("password")?.FirstOrDefault();
-                string dob = provider.FormData.GetValues("dob")?.FirstOrDefault();
-                string gender = provider.FormData.GetValues("gender")?.FirstOrDefault();
-                string state = provider.FormData.GetValues("state")?.FirstOrDefault();
-                string city = provider.FormData.GetValues("city")?.FirstOrDefault();
-                string roles = provider.FormData.GetValues("roles")?.FirstOrDefault();
+                string firstName = HttpContext.Current.Request.Form["firstname"];
+                string lastName = HttpContext.Current.Request.Form["lastname"];
+                string username = HttpContext.Current.Request.Form["username"];
+                string email = HttpContext.Current.Request.Form["email"];
+                string password = HttpContext.Current.Request.Form["password"];
+                string dob = HttpContext.Current.Request.Form["dob"];
+                string gender = HttpContext.Current.Request.Form["gender"];
+                string state = HttpContext.Current.Request.Form["state"];
+                string city = HttpContext.Current.Request.Form["city"];
+                string roles = HttpContext.Current.Request.Form["roles"];
                 var profileImage = HttpContext.Current.Request.Files[0]?.FileName;
 
                 if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName) || string.IsNullOrEmpty(username) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(dob) || string.IsNullOrEmpty(gender) || string.IsNullOrEmpty(state) || string.IsNullOrEmpty(city) || string.IsNullOrEmpty(roles) || string.IsNullOrEmpty(profileImage))
@@ -60,7 +62,6 @@ namespace user_auth_backend.Controllers
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "All fields are required");
                 }
 
-                // all validation here
 
                 UserModel user = new UserModel();
                 user.FirstName = firstName;
@@ -82,37 +83,37 @@ namespace user_auth_backend.Controllers
                     user.City = cityId;
                 }
 
-                
+                List<Role> selectedRoles = JsonConvert.DeserializeObject<List<Role>>(roles);
+                user.Roles = selectedRoles;
 
-                 string[] rolesArr = roles.Split(',');
-                Trace.WriteLine(rolesArr.Any((role) => role == "true"));
-                user.Roles.ForEach(role =>
+                string uniqueImgName = Guid.NewGuid().ToString() + "-"+profileImage;
+
+                user.ProfileImage = uniqueImgName;
+                // save in db
+                (bool isUsernameTaken, bool isEmailTaken, bool isSuccess) = UserRepository.RegisterUser(user);
+
+                if (!isSuccess)
                 {
-                    if (Boolean.TryParse(rolesArr[role.Id-1], out bool value)) { 
-                        role.IsSelected = value;
-                    }
-                });
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Failed to create user");
+                }
 
-                user.Roles.ForEach((role) =>
+                if (isUsernameTaken && isEmailTaken) {
+                    return Request.CreateErrorResponse(HttpStatusCode.Conflict, "Username and Email is already taken");
+                }
+
+                if (isUsernameTaken)
                 {
-                    Trace.WriteLine(role.Name + " " + role.IsSelected);
-                });
+                    return Request.CreateErrorResponse(HttpStatusCode.Conflict, "Username is already taken");
+                }
 
+                if (isEmailTaken)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.Conflict, "Email is already taken");
+                }
 
-                // save image to directory
-
-                //TODO: save data to db
-
-                // Show all the key-value pairs.
-                //foreach (var key in provider.FormData.AllKeys)
-                //{
-                //    foreach (var val in provider.FormData.GetValues(key))
-                //    {
-                //        Debug.WriteLine(string.Format("{0}: {1}", key, val));
-                //    }
-                //}
-
-
+                // save file only after success from db
+                string imgFolderPath = HttpContext.Current.Server.MapPath("~/Content/Images");
+                HttpContext.Current.Request.Files[0].SaveAs(Path.Combine(imgFolderPath, uniqueImgName));
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
