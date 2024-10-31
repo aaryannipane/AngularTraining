@@ -53,7 +53,7 @@ namespace user_auth_backend.Repository
 
 
                     
-                    con.Execute("spInsertUser", tvp, commandType:CommandType.StoredProcedure);
+                    con.Execute("spInsertUser", parameters, commandType:CommandType.StoredProcedure);
 
                     bool isUsernameTaken = parameters.Get<bool>("isUsernameDuplicate");
                     bool isEmailTaken = parameters.Get<bool>("isEmailDuplicate");

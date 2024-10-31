@@ -5,7 +5,6 @@ import {
   OnInit,
   Renderer2,
   ViewChild,
-  viewChild,
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { matchPassword } from '../../validators/matchPassword.validator';
@@ -13,6 +12,8 @@ import { roleRequired } from '../../validators/roleRequired.validator';
 import { dobValidator } from '../../validators/dob.validator';
 import { RegistrationService } from '../../services/registration.service';
 import { lastValueFrom } from 'rxjs';
+import { AlertService } from '../../services/alert.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -33,7 +34,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private registrationService: RegistrationService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private alertService: AlertService,
+    private router: Router
   ) {
     this.registrationService.getStates().subscribe({
       next: (data) => {
@@ -214,7 +217,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     this.validateAllFormFields(this.registerForm);
-
     if (this.registerForm.valid) {
       // create form data and fill value
       let fd = new FormData();
@@ -245,10 +247,13 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       this.registrationService.registerUser(fd).subscribe({
         next: (data) => {
           console.log(data);
+          this.alertService.setAlert('success', 'user registered success');
+          this.router.navigate(['login']);
         },
         error: (err) => {
           console.log(err);
           this.isSubmit = false;
+          this.alertService.setAlert('warning', err.error.Message);
         },
         complete: () => {
           console.log('register user complete');

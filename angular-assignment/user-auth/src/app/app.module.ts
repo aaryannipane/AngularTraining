@@ -10,6 +10,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient } from '@angular/common/http';
+import { AlertMessageComponent } from './components/alert-message/alert-message.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { provideHttpClient } from '@angular/common/http';
     LoginComponent,
     DashboardComponent,
     FooterComponent,
+    AlertMessageComponent,
   ],
   imports: [
     BrowserModule,
