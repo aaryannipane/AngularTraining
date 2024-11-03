@@ -31,8 +31,8 @@ namespace user_auth_backend.Repository
                     parameters.Add("password", user.Password, DbType.String, ParameterDirection.Input);
                     parameters.Add("dob", user.Dob, DbType.Date, ParameterDirection.Input);
                     parameters.Add("gender", user.Gender, DbType.String, ParameterDirection.Input);
-                    parameters.Add("stateId", user.State, DbType.Int32, ParameterDirection.Input);
-                    parameters.Add("cityId", user.City, DbType.Int32, ParameterDirection.Input);
+                    parameters.Add("stateId", user.StateId, DbType.Int32, ParameterDirection.Input);
+                    parameters.Add("cityId", user.CityId, DbType.Int32, ParameterDirection.Input);
                     parameters.Add("profileImage", user.ProfileImage, DbType.String, ParameterDirection.Input);
 
                     // roles
@@ -65,6 +65,36 @@ namespace user_auth_backend.Repository
             }
             catch (Exception ex) {
                 throw new Exception("Failed to register user", ex);
+            }
+        }
+
+        public static UserModel GetUserByUsernameEmail(string usernameEmail)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(_connectionString))
+                {
+                    UserModel user = null;
+                    con.Open();
+                    con.Query<UserModel, Role, UserModel>("spGetUserByUsernameEmail", (userModel, role) =>
+                    {
+                        if (user == null)
+                        {
+                            user = userModel;
+                            user.Roles = new List<Role>();
+                        }
+                        
+                        user.Roles.Add(role);
+                        
+                        return user;
+                    }, splitOn:"id", param:new{usernameEmail}, commandType: CommandType.StoredProcedure);
+                    // con.Query<UserModel>("spGetUserByUsernameEmail", new {usernameEmail}, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                    return user;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to get user", ex);
             }
         }
     }

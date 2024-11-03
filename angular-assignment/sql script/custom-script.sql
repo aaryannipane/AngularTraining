@@ -148,3 +148,17 @@ end
 go
 
 select * from userRoles
+spGetUserByUsernameEmail 'user1'
+alter proc spGetUserByUsernameEmail
+@usernameEmail nvarchar(20)
+as
+begin
+	select A.*, B.name 'state', C.name 'city', E.id, E.name from users as A 
+	join state as B ON A.stateId=B.id
+	join city as C ON A.cityId=C.id
+	join userRoles as D ON A.id = D.userId
+	join roles as E ON D.roleId = E.id
+	where A.username=@usernameEmail OR A.email=@usernameEmail
+end
+select * from users
+select * from roles

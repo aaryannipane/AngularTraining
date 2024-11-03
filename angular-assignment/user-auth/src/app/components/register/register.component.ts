@@ -10,8 +10,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { matchPassword } from '../../validators/matchPassword.validator';
 import { roleRequired } from '../../validators/roleRequired.validator';
 import { dobValidator } from '../../validators/dob.validator';
-import { RegistrationService } from '../../services/registration.service';
-import { lastValueFrom } from 'rxjs';
+import { UserService } from '../../services/user.service';
 import { AlertService } from '../../services/alert.service';
 import { Router } from '@angular/router';
 
@@ -33,17 +32,19 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   constructor(
     private fb: FormBuilder,
-    private registrationService: RegistrationService,
+    private userService: UserService,
     private renderer: Renderer2,
     private alertService: AlertService,
     private router: Router
   ) {
-    this.registrationService.getStates().subscribe({
+    // TODO: use fork with getstate and getroles
+    this.userService.getStates().subscribe({
       next: (data) => {
         this.states = data as Array<any>;
       },
       error: (err) => {
         console.log(err);
+        alertService.setAlert('danger', 'Failed to load state');
       },
       complete: () => {
         console.log('complete');
@@ -81,7 +82,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
     this.registerForm.get('city')?.disable();
 
-    this.registrationService.getRoles().subscribe({
+    this.userService.getRoles().subscribe({
       next: (data) => {
         let formRoles = this.registerForm.get('roles') as FormArray;
         this.rolesDB = data as Array<any>;
@@ -91,17 +92,12 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       },
       error: (err) => {
         console.log(err);
+        alertService.setAlert('danger', 'Failed to load roles');
       },
       complete: () => {
         console.log('roles req complete');
       },
     });
-  }
-
-  // observable to promise
-  async getRoles() {
-    let roles = await lastValueFrom(this.registrationService.getRoles());
-    console.log(roles);
   }
 
   ngOnInit(): void {}
@@ -175,7 +171,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   onStateChange(event: Event) {
     if (!isNaN(this.state?.value)) {
-      this.registrationService.getCitys(this.state?.value).subscribe({
+      this.userService.getCitys(this.state?.value).subscribe({
         next: (data) => {
           this.citys = data as Array<any>;
           this.city?.enable();
@@ -184,6 +180,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         error: (err) => {
           console.log(err);
           this.city?.disable();
+          this.alertService.setAlert('danger', 'Failed to load state');
         },
         complete: () => {
           console.log('city req complete');
@@ -244,7 +241,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       );
 
       this.isSubmit = true;
-      this.registrationService.registerUser(fd).subscribe({
+      this.userService.registerUser(fd).subscribe({
         next: (data) => {
           console.log(data);
           this.alertService.setAlert('success', 'user registered success');

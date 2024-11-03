@@ -1,15 +1,22 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Security;
+using Microsoft.IdentityModel.Tokens;
+using user_auth_backend.Models;
 using user_auth_backend.Models.Roles;
 using user_auth_backend.Models.User;
 using user_auth_backend.Repository;
@@ -22,7 +29,7 @@ namespace user_auth_backend.Controllers
 
         [HttpPost]
         [Route("user")]
-        public async Task<HttpResponseMessage> RegisterUser()
+        public HttpResponseMessage RegisterUser()
         {
 
             // check all data valid
@@ -36,7 +43,6 @@ namespace user_auth_backend.Controllers
 
             //HttpContext.Current.Request.Files[0].SaveAs("C:\\Application\\AngularTraining\\angular-assignment\\user-auth-backend\\App_Data\\myfile.png");
 
-            Debug.WriteLine(HttpContext.Current.Request.Files[0].FileName);
 
 
 
@@ -76,11 +82,11 @@ namespace user_auth_backend.Controllers
                 user.Gender = gender;
                 if(Int32.TryParse(state, out int stateId))
                 {
-                    user.State = stateId;
+                    user.StateId = stateId;
                 }
                 if(Int32.TryParse(city, out int cityId))
                 {
-                    user.City = cityId;
+                    user.CityId = cityId;
                 }
 
                 List<Role> selectedRoles = JsonConvert.DeserializeObject<List<Role>>(roles);
@@ -120,6 +126,92 @@ namespace user_auth_backend.Controllers
             catch (System.Exception e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+            }
+        }
+
+        [HttpPost]
+        [Route("login")]
+        public HttpResponseMessage Login([FromBody] LoginModel loginData)
+        {
+            Trace.WriteLine(loginData.usernameEmail);
+            try
+            {
+                UserModel user = UserRepository.GetUserByUsernameEmail(loginData.usernameEmail);
+                
+
+                if (user == null)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Invalid username or email");
+                }
+
+                if (user.Password != loginData.password)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.Unauthorized, "Invalid password");
+                }
+                
+                // create jwt token and put it in body to store in local storage
+                var token = GenerateJwtToken(user.Username, user.Roles);
+                
+                
+                return Request.CreateResponse(HttpStatusCode.OK, new {
+                    user, token
+                });
+                
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.NotImplemented, "Not implemented");
+        }
+        
+        
+        private string GenerateJwtToken(string username, List<Role> roles)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(ConfigurationManager.AppSettings["JwtKey"]);
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, username),
+            };
+
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role.Name));
+            }
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature)
+            };
+            
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
+
+        private string EncryptToken(string token)
+        {
+            using (Aes aes = Aes.Create())
+            {
+                aes.Key = Encoding.ASCII.GetBytes(ConfigurationManager.AppSettings["JwtKey"]);
+                aes.GenerateKey();
+                var iv = aes.IV;
+
+                using (var encryptor = aes.CreateEncryptor(aes.Key, aes.IV))
+                {
+                    var tokenBytes = Encoding.UTF8.GetBytes(token);
+                    var encryptedBytes = encryptor.TransformFinalBlock(tokenBytes, 0, tokenBytes.Length);
+                    
+                    var result = new byte[iv.Length + encryptedBytes.Length];
+                    Buffer.BlockCopy(iv, 0, result, 0, iv.Length);
+                    Buffer.BlockCopy(encryptedBytes, 0, result, iv.Length, encryptedBytes.Length);
+                    
+                    return Convert.ToBase64String(result);
+                }
             }
         }
     }
