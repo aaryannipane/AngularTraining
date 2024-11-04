@@ -9,8 +9,13 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { provideHttpClient } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { AlertMessageComponent } from './components/alert-message/alert-message.component';
+import { HttpInterceptorInterceptor } from './http-interceptor.interceptor';
 
 @NgModule({
   declarations: [
@@ -22,13 +27,15 @@ import { AlertMessageComponent } from './components/alert-message/alert-message.
     FooterComponent,
     AlertMessageComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
+  imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorInterceptor,
+      multi: true,
+    },
+    provideHttpClient(withInterceptorsFromDi()),
   ],
-  providers: [provideHttpClient()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -20,6 +20,7 @@ using user_auth_backend.Models;
 using user_auth_backend.Models.Roles;
 using user_auth_backend.Models.User;
 using user_auth_backend.Repository;
+using Microsoft.Ajax.Utilities;
 
 namespace user_auth_backend.Controllers
 {
@@ -151,6 +152,7 @@ namespace user_auth_backend.Controllers
                 
                 // create jwt token and put it in body to store in local storage
                 var token = GenerateJwtToken(user.Username, user.Roles);
+                token = EncryptToken(token);
                 
                 
                 return Request.CreateResponse(HttpStatusCode.OK, new {
@@ -162,9 +164,25 @@ namespace user_auth_backend.Controllers
             {
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex.Message);
             }
-            return Request.CreateResponse(HttpStatusCode.NotImplemented, "Not implemented");
         }
-        
+
+        [HttpGet]
+        [Authorize]
+        [Route("token/verify")]
+        public HttpResponseMessage VerifyToken()
+        {
+            
+            Trace.WriteLine("get username and fetch data of user");
+            UserModel user = UserRepository.GetUserByUsernameEmail(User.Identity.Name);
+
+
+            if (user == null)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Invalid username or email");
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, user);
+        }
         
         private string GenerateJwtToken(string username, List<Role> roles)
         {
@@ -193,12 +211,13 @@ namespace user_auth_backend.Controllers
             return tokenHandler.WriteToken(token);
         }
 
+   
+
         private string EncryptToken(string token)
         {
             using (Aes aes = Aes.Create())
             {
-                aes.Key = Encoding.ASCII.GetBytes(ConfigurationManager.AppSettings["JwtKey"]);
-                aes.GenerateKey();
+                aes.Key = Encoding.ASCII.GetBytes("b4G7rXyPz8LwN3KdQs6H2MvZc1TjU9Wh");
                 var iv = aes.IV;
 
                 using (var encryptor = aes.CreateEncryptor(aes.Key, aes.IV))

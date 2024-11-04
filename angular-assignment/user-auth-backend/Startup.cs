@@ -60,7 +60,7 @@ namespace user_auth_backend
 
             using (Aes aes = Aes.Create())
             {
-                aes.Key = Encoding.ASCII.GetBytes(SecretKey);
+                aes.Key = Encoding.ASCII.GetBytes("b4G7rXyPz8LwN3KdQs6H2MvZc1TjU9Wh");
                 var iv = new byte[aes.BlockSize / 8];
                 var cipherText = new byte[fullCipher.Length - iv.Length];
 

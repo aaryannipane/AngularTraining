@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { AlertService } from '../../services/alert.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent {
     private fb: FormBuilder,
     private userService: UserService,
     private alert: AlertService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.loginForm = fb.group({
       usernameEmail: ['', [Validators.required]],
@@ -44,9 +46,13 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.isSubmit = true;
       this.userService.loginUser(this.loginForm.value).subscribe({
-        next: (data) => {
+        next: (data: { [index: string]: any }) => {
           this.alert.setAlert('success', 'login success');
-          this.router.navigate(['dashboard']);
+
+          localStorage.setItem('token', data['token']);
+          this.authService.SetUser(data['user'], true);
+
+          this.router.navigate(['/']);
         },
         error: (err) => {
           console.log(err);

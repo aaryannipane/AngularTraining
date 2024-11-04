@@ -81,7 +81,7 @@ print @isSuccess
 select * from users
 select * from userRoles
 
-DBCC CHECKIDENT ('[userRoles]', RESEED, 0);
+DBCC CHECKIDENT ('[users]', RESEED, 0);
 GO
 
 truncate table userRoles
@@ -149,7 +149,7 @@ go
 
 select * from userRoles
 spGetUserByUsernameEmail 'user1'
-alter proc spGetUserByUsernameEmail
+create proc spGetUserByUsernameEmail
 @usernameEmail nvarchar(20)
 as
 begin
@@ -162,3 +162,6 @@ begin
 end
 select * from users
 select * from roles
+
+delete userRoles
+delete users

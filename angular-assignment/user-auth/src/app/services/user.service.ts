@@ -21,10 +21,14 @@ export class UserService {
   }
 
   registerUser(data: any) {
-    return this._http.post(`${this.url}/user`, data); 
+    return this._http.post(`${this.url}/user`, data);
   }
 
   loginUser(data: any) {
     return this._http.post(`${this.url}/login`, data);
+  }
+
+  verifyUser() {
+    return this._http.get(`${this.url}/token/verify`);
   }
 }

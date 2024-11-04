@@ -14,7 +14,6 @@ namespace user_auth_backend.Controllers
     [RoutePrefix("api/v1")]
     public class LocationController : ApiController
     {
-        [Authorize]
         [HttpGet]
         [Route("states")]
         public HttpResponseMessage States()

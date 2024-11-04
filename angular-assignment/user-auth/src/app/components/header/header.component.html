@@ -17,10 +17,21 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a [routerLink]="['register']" [routerLinkActive]="['active']">Register</a></li>
-                    <li><a [routerLink]="['login']" [routerLinkActive]="['active']">Login</a></li>
-                    <li><a [routerLink]="['']" [routerLinkActive]="['active']"
-                            [routerLinkActiveOptions]="{exact:true}">Dashboard</a></li>
+                    <div *ngIf="!isAuthenticated;then thenBlock; else elseBlock">
+
+                    </div>
+
+                    <ng-template #thenBlock>
+                        <li><a [routerLink]="['register']" [routerLinkActive]="['active']">Register</a></li>
+                        <li><a [routerLink]="['login']" [routerLinkActive]="['active']">Login</a></li>
+                    </ng-template>
+
+                    <ng-template #elseBlock>
+                        <li><a [routerLink]="['']" [routerLinkActive]="['active']"
+                                [routerLinkActiveOptions]="{exact:true}">Dashboard</a></li>
+                        <li><button type="button" class="btn btn-default navbar-btn"
+                                (click)="logout($event)">Logout</button></li>
+                    </ng-template>
 
                 </ul>
             </div><!-- /.navbar-collapse -->
