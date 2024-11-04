@@ -10,4 +10,8 @@ export class DataService {
   getAllUsers() {
     return this.http.get('api/users');
   }
+
+  updateUser(id: number, updatedBody: any) {
+    return this.http.put(`api/user/${id}`, updatedBody);
+  }
 }
