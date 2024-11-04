@@ -3,19 +3,19 @@
   "WorkspaceRootPath": "C:\\Application\\AngularTraining\\angular-assignment\\user-auth-backend\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|C:\\Application\\AngularTraining\\angular-assignment\\user-auth-backend\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|solutionrelative:controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|c:\\application\\angulartraining\\angular-assignment\\user-auth-backend\\controllers\\locationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|solutionrelative:controllers\\locationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|c:\\application\\angulartraining\\angular-assignment\\user-auth-backend\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|solutionrelative:controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|c:\\application\\angulartraining\\angular-assignment\\user-auth-backend\\startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|C:\\Application\\AngularTraining\\angular-assignment\\user-auth-backend\\startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|solutionrelative:startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|c:\\application\\angulartraining\\angular-assignment\\user-auth-backend\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "AbsoluteMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|C:\\Application\\AngularTraining\\angular-assignment\\user-auth-backend\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|solutionrelative:web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     }
   ],
@@ -26,17 +26,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "LocationController.cs",
               "DocumentMoniker": "C:\\Application\\AngularTraining\\angular-assignment\\user-auth-backend\\Controllers\\LocationController.cs",
               "RelativeDocumentMoniker": "Controllers\\LocationController.cs",
               "ToolTip": "C:\\Application\\AngularTraining\\angular-assignment\\user-auth-backend\\Controllers\\LocationController.cs",
               "RelativeToolTip": "Controllers\\LocationController.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAAA8AAAAFAAAA",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABkAAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-04T04:43:46.914Z",
               "EditorCaption": ""
@@ -56,13 +56,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Application\\AngularTraining\\angular-assignment\\user-auth-backend\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "Controllers\\UserController.cs",
               "ToolTip": "C:\\Application\\AngularTraining\\angular-assignment\\user-auth-backend\\Controllers\\UserController.cs",
               "RelativeToolTip": "Controllers\\UserController.cs",
-              "ViewState": "AQIAAKQAAAAAAAAAAAAAwLYAAAAAAAAA",
+              "ViewState": "AQIAAB8AAAAAAAAAAAAqwIsAAABGAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-04T03:45:06.907Z",
               "EditorCaption": ""
@@ -77,8 +77,7 @@
               "RelativeToolTip": "Startup.cs",
               "ViewState": "AQIAADQAAAAAAAAAAAAkwEMAAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-04T03:41:51.457Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-04T03:41:51.457Z"
             }
           ]
         }

@@ -27,6 +27,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   citys: any = [];
   profileImageFile: any;
   isSubmit: boolean = false;
+  isFileSelected: boolean = false;
 
   @ViewChild('profileImg') imgElm!: ElementRef;
 
@@ -37,7 +38,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     private alertService: AlertService,
     private router: Router
   ) {
-    // TODO: use fork with getstate and getroles
     this.userService.getStates().subscribe({
       next: (data) => {
         this.states = data as Array<any>;
@@ -55,7 +55,15 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     this.registerForm = this.fb.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      username: ['', [Validators.required]],
+      username: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            '^(?=.{5,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$'
+          ),
+        ],
+      ],
       email: ['', [Validators.required, Validators.email]],
       passwords: this.fb.group({
         password: [
@@ -151,6 +159,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   }
 
   validateAllFormFields(formGroup: FormGroup) {
+    this.isFileSelected = true;
+
     Object.keys(formGroup.controls).forEach((field) => {
       if (field === 'passwords') {
         const password = formGroup.get(field)?.get('password');
@@ -209,6 +219,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   }
 
   removeImg(event: Event) {
+    this.isFileSelected = true;
     this.image?.patchValue('');
   }
 
@@ -265,6 +276,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   onReset() {
     this.registerForm.reset();
+    this.isFileSelected = false;
     this.city?.disable();
   }
 }

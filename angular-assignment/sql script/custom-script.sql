@@ -148,9 +148,9 @@ end
 go
 
 select * from userRoles
-spGetUserByUsernameEmail 'user1'
-create proc spGetUserByUsernameEmail
-@usernameEmail nvarchar(20)
+spGetUserByUsernameEmail 'prathamesh@gmail.comasdsa'
+alter proc spGetUserByUsernameEmail
+@usernameEmail nvarchar(max)
 as
 begin
 	select A.*, B.name 'state', C.name 'city', E.id, E.name from users as A 
