@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,11 +8,14 @@ import { AuthService } from '../../services/auth.service';
 })
 export class DashboardComponent {
   user: any = null;
+  isLoading: boolean = false;
 
-  constructor(private authService: AuthService) {
-    authService.authObs$.subscribe({
-      next: (data) => {
-        this.user = data.user;
+  constructor(private userService: UserService) {
+    this.isLoading = true;
+    userService.getUser().subscribe({
+      next: (user) => {
+        this.user = user;
+        this.isLoading = false;
       },
     });
   }

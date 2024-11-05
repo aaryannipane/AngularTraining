@@ -49,8 +49,12 @@
             <div class="form-group"
                 [ngClass]="{'has-error ':(!password?.valid && (password?.dirty ||password?.touched))}">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Password"
-                    formControlName="password">
+                <div class="pass-container">
+
+                    <input type="password" class="form-control" id="password" placeholder="Password"
+                        formControlName="password">
+                    <span class="glyphicon glyphicon-eye-open pass-eye" (click)="toggleEye($event)"></span>
+                </div>
                 <div *ngIf="!password?.valid && (password?.dirty || password?.touched)" class="text-danger">
                     <div [hidden]="!password?.errors?.['required']">Password is required</div>
                     <div [hidden]="!password?.errors?.['pattern']">Password must be at least 4 characters long and
@@ -60,8 +64,12 @@
             <div class="form-group"
                 [ngClass]="{'has-error ':((!confirmPassword?.valid || passwords?.errors?.['noMatch']) && (confirmPassword?.dirty ||confirmPassword?.touched))}">
                 <label for="confirmPassword">Confirm Password</label>
-                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password"
-                    formControlName="confirmPassword">
+                <div class="pass-container">
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password"
+                        formControlName="confirmPassword">
+                    <span class="glyphicon glyphicon-eye-open pass-eye" (click)="toggleEye($event)"></span>
+
+                </div>
                 <div *ngIf="(!confirmPassword?.valid || passwords?.errors?.['noMatch']) && (confirmPassword?.dirty || confirmPassword?.touched)"
                     class="text-danger">
                     <div [hidden]="!confirmPassword?.errors?.['required']">Confirm Password is required</div>

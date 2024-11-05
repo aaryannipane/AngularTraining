@@ -9,16 +9,7 @@ import { lastValueFrom } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'user-auth';
   constructor() {}
-
-  async ngOnInit(): Promise<void> {
-    let getProm = new Promise((resolve, reject) => {
-      setTimeout(() => resolve(true), 5000);
-    });
-
-    let data = await getProm;
-    console.log(data);
-  }
 }

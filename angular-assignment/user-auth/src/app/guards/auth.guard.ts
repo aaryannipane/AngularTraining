@@ -19,18 +19,15 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     private userService: UserService
   ) {}
 
-  async canActivate(): Promise<boolean> {
-    
+  canActivate(): boolean {
+    // if (!this.authService.IsAuthenticated) {
+    //   let token = localStorage.getItem('token');
+    //   if (token) {
+    //     let data = await lastValueFrom(this.userService.getUser());
 
-    if (!this.authService.IsAuthenticated) {
-      let token = localStorage.getItem('token');
-      if (token) {
-        let data = await lastValueFrom(this.userService.verifyUser());
-        console.log(data);
-
-        this.authService.SetUser(data, true);
-      }
-    }
+    //     this.authService.SetUser(data, true);
+    //   }
+    // }
 
     return this.checkAuth();
   }
@@ -44,11 +41,12 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   }
 
   private checkAuth(): boolean {
-    if (this.authService.IsAuthenticated) {
+    let isAuth = localStorage.getItem('isAuth');
+    if (isAuth && !!isAuth) {
       return true;
     } else {
       // Redirect to the login page if the user is not authenticated
-      this.router.navigate(['/login']);
+      this.router.navigate(['login']);
       return false;
     }
   }

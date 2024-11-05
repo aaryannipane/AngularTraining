@@ -32,7 +32,6 @@ namespace user_auth_backend.Controllers
         [Route("user")]
         public HttpResponseMessage RegisterUser()
         {
-
             // check all data valid
             // save file 
             // save details in db
@@ -155,8 +154,7 @@ namespace user_auth_backend.Controllers
                 token = EncryptToken(token);
                 
                 
-                return Request.CreateResponse(HttpStatusCode.OK, new {
-                    user, token
+                return Request.CreateResponse(HttpStatusCode.OK, new {token
                 });
                 
             }
@@ -168,8 +166,8 @@ namespace user_auth_backend.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("token/verify")]
-        public HttpResponseMessage VerifyToken()
+        [Route("user")]
+        public HttpResponseMessage GetUser()
         {
             
             Trace.WriteLine("get username and fetch data of user");
@@ -181,7 +179,7 @@ namespace user_auth_backend.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Invalid username or email");
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK, user);
+            return Request.CreateResponse(HttpStatusCode.OK, new {user.FirstName, user.LastName, user.ProfileImage});
         }
         
         private string GenerateJwtToken(string username, List<Role> roles)

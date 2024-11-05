@@ -32,8 +32,10 @@ describe('DataService', () => {
       },
     });
 
-    const mockReq = testingController.expectOne('api/users');
-    expect(mockReq.request.method).toEqual('GET');
+    const mockReq = testingController.expectOne('api/users'); // expects only one request is made and returns response
+    expect(mockReq.request.method).toEqual('GET'); // check req method is GET
+
+    // puts custom data as request response
     mockReq.flush(Object.values(USERS));
   });
 

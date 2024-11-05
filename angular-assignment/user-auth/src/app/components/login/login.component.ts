@@ -42,7 +42,6 @@ export class LoginComponent {
 
   onSubmit() {
     this.validateAllFormFields(this.loginForm);
-    console.log(this.loginForm.valid);
     if (this.loginForm.valid) {
       this.isSubmit = true;
       this.userService.loginUser(this.loginForm.value).subscribe({
@@ -50,16 +49,32 @@ export class LoginComponent {
           this.alert.setAlert('success', 'login success');
 
           localStorage.setItem('token', data['token']);
-          this.authService.SetUser(data['user'], true);
+          // this.authService.SetUser(data['user'], true);
+          this.authService.SetIsAuth(true);
 
-          this.router.navigate(['/']);
+          this.router.navigate(['']);
         },
         error: (err) => {
-          console.log(err);
+          // console.log(err);
+
           this.alert.setAlert('danger', err.error.Message);
           this.isSubmit = false;
         },
       });
+    }
+  }
+
+  toggleEye(event: Event) {
+    let el = event.target as HTMLSpanElement;
+    if (el.classList.contains('glyphicon-eye-open')) {
+      el.classList.remove('glyphicon-eye-open');
+      el.classList.add('glyphicon-eye-close');
+      (el.previousSibling! as HTMLInputElement).type = 'text';
+    } else {
+      el.classList.add('glyphicon-eye-open');
+      el.classList.remove('glyphicon-eye-close');
+      (el.previousSibling! as HTMLInputElement).type = 'password';
+
     }
   }
 }

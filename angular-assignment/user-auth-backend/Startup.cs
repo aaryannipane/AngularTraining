@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http.Results;
 using Microsoft.Ajax.Utilities;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Owin;
@@ -33,7 +34,17 @@ namespace user_auth_backend
                 if (!string.IsNullOrEmpty(authHeader) && authHeader.StartsWith("Bearer "))
                 {
                     var encryptedToken = authHeader.Substring("Bearer ".Length).Trim();
-                    var decryptedToken = DecryptToken(encryptedToken);
+                    var decryptedToken="";
+                    try
+                    {
+
+                        decryptedToken = DecryptToken(encryptedToken);
+                    }
+                    catch (Exception ex) {
+                        decryptedToken = "";
+                    }
+
+                    
                     context.Request.Headers["Authorization"] = $"Bearer {decryptedToken}";
                 }
 

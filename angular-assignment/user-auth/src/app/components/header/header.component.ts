@@ -16,10 +16,16 @@ export class HeaderComponent {
         this.isAuthenticated = data.isAuthenticated;
       },
     });
+
+    // let isAuth = localStorage.getItem('isAuth');
+    // if (isAuth) {
+    //   this.isAuthenticated = !!isAuth;
+    // }
   }
 
   logout(event: any) {
     localStorage.removeItem('token');
+    localStorage.clear();
     this.authService.SetUser(null, false);
     this.router.navigate(['login']);
   }

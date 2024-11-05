@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
-export class RegisterComponent implements OnInit, AfterViewInit {
+export class RegisterComponent{
   registerForm!: FormGroup;
   currentDate = new Date().toISOString().split('T')[0];
   rolesDB: any = [];
@@ -45,9 +45,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       error: (err) => {
         console.log(err);
         alertService.setAlert('danger', 'Failed to load state');
-      },
-      complete: () => {
-        console.log('complete');
       },
     });
 
@@ -102,21 +99,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         console.log(err);
         alertService.setAlert('danger', 'Failed to load roles');
       },
-      complete: () => {
-        console.log('roles req complete');
-      },
     });
   }
 
-  ngOnInit(): void {}
-
-  ngAfterViewInit(): void {
-    this.image?.valueChanges.subscribe({
-      next: (data) => {
-        console.log(data);
-      },
-    });
-  }
 
   get firstName() {
     return this.registerForm.get('firstName');
@@ -192,9 +177,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
           this.city?.disable();
           this.alertService.setAlert('danger', 'Failed to load state');
         },
-        complete: () => {
-          console.log('city req complete');
-        },
       });
     }
   }
@@ -229,7 +211,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       // create form data and fill value
       let fd = new FormData();
       Object.keys(this.registerForm.controls).forEach((key) => {
-        console.log(key);
 
         if (key === 'passwords') {
           fd.append('password', this.password?.value);
@@ -254,7 +235,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       this.isSubmit = true;
       this.userService.registerUser(fd).subscribe({
         next: (data) => {
-          console.log(data);
           this.alertService.setAlert('success', 'user registered success');
           this.router.navigate(['login']);
         },
@@ -263,20 +243,28 @@ export class RegisterComponent implements OnInit, AfterViewInit {
           this.isSubmit = false;
           this.alertService.setAlert('warning', err.error.Message);
         },
-        complete: () => {
-          console.log('register user complete');
-          // this.isSubmit = false;`
-        },
       });
 
-      console.log(fd);
     }
-    console.log('form valid', this.registerForm.valid);
   }
 
   onReset() {
     this.registerForm.reset();
     this.isFileSelected = false;
     this.city?.disable();
+  }
+
+  toggleEye(event: Event) {
+    let el = event.target as HTMLSpanElement;
+    if (el.classList.contains('glyphicon-eye-open')) {
+      el.classList.remove('glyphicon-eye-open');
+      el.classList.add('glyphicon-eye-close');
+      (el.previousSibling! as HTMLInputElement).type = 'text';
+    } else {
+      el.classList.add('glyphicon-eye-open');
+      el.classList.remove('glyphicon-eye-close');
+      (el.previousSibling! as HTMLInputElement).type = 'password';
+
+    }
   }
 }

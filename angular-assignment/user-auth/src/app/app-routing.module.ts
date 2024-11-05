@@ -21,7 +21,7 @@ const routes: Routes = [
     path: '',
     component: DashboardComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
 ];
 

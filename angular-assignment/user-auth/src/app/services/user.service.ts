@@ -28,7 +28,7 @@ export class UserService {
     return this._http.post(`${this.url}/login`, data);
   }
 
-  verifyUser() {
-    return this._http.get(`${this.url}/token/verify`);
+  getUser() {
+    return this._http.get(`${this.url}/user`);
   }
 }
