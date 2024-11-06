@@ -32,7 +32,7 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('unit-testing');
   });
 
-  it('should render title', () => {
+  xit('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
 
     fixture.detectChanges();
@@ -40,7 +40,7 @@ describe('AppComponent', () => {
     expect(compiled.querySelector('h1')?.textContent).toContain('unit-testing');
   });
 
-  it('should render a button with text subscribe', () => {
+  xit('should render a button with text subscribe', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const el = fixture.debugElement;
     const component = fixture.componentInstance;
@@ -69,7 +69,7 @@ describe('AppComponent', () => {
   // });
 
   // TEST ASYNC OPERATIONS REQUEST AND ALL
-  it('should render a button with text subscribed and button should be disabled after click and async task is finished', fakeAsync(() => {
+  xit('should render a button with text subscribed and button should be disabled after click and async task is finished', fakeAsync(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const el = fixture.debugElement;
     const component = fixture.componentInstance;

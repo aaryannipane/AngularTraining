@@ -11,7 +11,7 @@
       "RelativeMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|solutionrelative:startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|c:\\application\\angulartraining\\angular-assignment\\user-auth-backend\\models\\user\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|C:\\Application\\AngularTraining\\angular-assignment\\user-auth-backend\\models\\user\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|solutionrelative:models\\user\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -19,7 +19,7 @@
       "RelativeMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|solutionrelative:web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|c:\\application\\angulartraining\\angular-assignment\\user-auth-backend\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|C:\\Application\\AngularTraining\\angular-assignment\\user-auth-backend\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -27,7 +27,7 @@
       "RelativeMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|solutionrelative:controllers\\locationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|c:\\application\\angulartraining\\angular-assignment\\user-auth-backend\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|C:\\Application\\AngularTraining\\angular-assignment\\user-auth-backend\\controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{54A355E2-9402-4033-B302-A3714F5682DB}|user-auth-backend.csproj|solutionrelative:controllers\\rolescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -50,8 +50,7 @@
               "RelativeToolTip": "Models\\User\\UserModel.cs",
               "ViewState": "AQIAAAYAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-05T08:38:56.064Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-05T08:38:56.064Z"
             },
             {
               "$type": "Document",
@@ -63,8 +62,7 @@
               "RelativeToolTip": "Controllers\\HomeController.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-05T07:22:22.681Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-05T07:22:22.681Z"
             },
             {
               "$type": "Document",
@@ -76,8 +74,7 @@
               "RelativeToolTip": "Controllers\\RolesController.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-05T07:22:16.933Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-05T07:22:16.933Z"
             },
             {
               "$type": "Document",
@@ -89,8 +86,7 @@
               "RelativeToolTip": "Controllers\\LocationController.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-04T04:43:46.914Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-04T04:43:46.914Z"
             },
             {
               "$type": "Document",
@@ -113,7 +109,7 @@
               "RelativeDocumentMoniker": "Controllers\\UserController.cs",
               "ToolTip": "C:\\Application\\AngularTraining\\angular-assignment\\user-auth-backend\\Controllers\\UserController.cs",
               "RelativeToolTip": "Controllers\\UserController.cs",
-              "ViewState": "AQIAABoAAAAAAAAAAAAqwLUAAAByAAAA",
+              "ViewState": "AQIAACkAAAAAAAAAAAAAACAAAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-04T03:45:06.907Z",
               "EditorCaption": ""
@@ -128,8 +124,7 @@
               "RelativeToolTip": "Startup.cs",
               "ViewState": "AQIAABoAAAAAAAAAAAAQwCsAAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-04T03:41:51.457Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-04T03:41:51.457Z"
             }
           ]
         }

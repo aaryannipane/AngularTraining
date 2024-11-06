@@ -1,6 +1,6 @@
 <h1>{{title}}</h1>
 <button class="subscribe" (click)="subscribe()" [disabled]="isSubscribe">{{btnText}}</button>
 
-<div *ngFor="let mark of marks" [mark]="mark" appGrade>{{mark |grade}}</div>
+<div *ngFor="let mark of marks" [mark]="mark" appGrade>{{mark | grade}}</div>
 
 <router-outlet></router-outlet>
