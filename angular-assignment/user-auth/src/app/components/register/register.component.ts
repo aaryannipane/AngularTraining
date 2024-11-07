@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
-export class RegisterComponent{
+export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   currentDate = new Date().toISOString().split('T')[0];
   rolesDB: any = [];
@@ -37,14 +37,16 @@ export class RegisterComponent{
     private renderer: Renderer2,
     private alertService: AlertService,
     private router: Router
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.userService.getStates().subscribe({
       next: (data) => {
         this.states = data as Array<any>;
       },
       error: (err) => {
         console.log(err);
-        alertService.setAlert('danger', 'Failed to load state');
+        this.alertService.setAlert('danger', 'Failed to load state');
       },
     });
 
@@ -97,11 +99,10 @@ export class RegisterComponent{
       },
       error: (err) => {
         console.log(err);
-        alertService.setAlert('danger', 'Failed to load roles');
+        this.alertService.setAlert('danger', 'Failed to load roles');
       },
     });
   }
-
 
   get firstName() {
     return this.registerForm.get('firstName');
@@ -145,8 +146,13 @@ export class RegisterComponent{
 
   validateAllFormFields(formGroup: FormGroup) {
     this.isFileSelected = true;
+    console.log('register component');
 
-    Object.keys(formGroup.controls).forEach((field) => {
+    console.log(formGroup.controls);
+
+    console.log(Object.keys(formGroup.controls));
+    // Object.keys(formGroup.controls)?.forEach((field) => {
+    for (let field in formGroup.controls) {
       if (field === 'passwords') {
         const password = formGroup.get(field)?.get('password');
         const confirmPassword = formGroup.get(field)?.get('confirmPassword');
@@ -160,8 +166,12 @@ export class RegisterComponent{
 
       const control = formGroup.get(field);
       control?.markAsTouched({ onlySelf: true });
+      console.log(field);
+
+      console.log(control);
+
       control?.updateValueAndValidity();
-    });
+    }
   }
 
   onStateChange(event: Event) {
@@ -207,11 +217,17 @@ export class RegisterComponent{
 
   onSubmit() {
     this.validateAllFormFields(this.registerForm);
+    console.log('inside on submit ');
+    console.log(this.registerForm.errors);
+
+    console.log('is valid form> ' + this.registerForm.get('image')?.valid);
+
     if (this.registerForm.valid) {
+      console.log('form is valid');
+
       // create form data and fill value
       let fd = new FormData();
       Object.keys(this.registerForm.controls).forEach((key) => {
-
         if (key === 'passwords') {
           fd.append('password', this.password?.value);
         } else if (key === 'image') {
@@ -227,14 +243,14 @@ export class RegisterComponent{
         }
       });
 
-      fd.append(
-        'rolesCustom',
-        JSON.stringify({ admin: true, seller: false, buyer: false })
-      );
+      // fd.append(
+      //   'rolesCustom',
+      //   JSON.stringify({ admin: true, seller: false, buyer: false })
+      // );
 
       this.isSubmit = true;
       this.userService.registerUser(fd).subscribe({
-        next: (data) => {
+        next: () => {
           this.alertService.setAlert('success', 'user registered success');
           this.router.navigate(['login']);
         },
@@ -244,7 +260,6 @@ export class RegisterComponent{
           this.alertService.setAlert('warning', err.error.Message);
         },
       });
-
     }
   }
 
@@ -264,7 +279,6 @@ export class RegisterComponent{
       el.classList.add('glyphicon-eye-open');
       el.classList.remove('glyphicon-eye-close');
       (el.previousSibling! as HTMLInputElement).type = 'password';
-
     }
   }
 }

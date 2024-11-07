@@ -13,4 +13,29 @@ describe('AuthService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should set user details', () => {
+    const user = {
+      username: 'aryannipane',
+    };
+    const isAuth = true;
+
+    service.SetUser(user, isAuth);
+
+    expect(service.IsAuthenticated).toBe(true);
+    expect(service.User).toEqual(user);
+  });
+
+  it('should set isAuth', () => {
+    spyOn(localStorage, 'setItem');
+    const isAuth = true;
+
+    service.SetIsAuth(isAuth);
+
+    expect(service.IsAuthenticated).toBe(true);
+    expect(localStorage.setItem).toHaveBeenCalledOnceWith(
+      'isAuth',
+      JSON.stringify(isAuth)
+    );
+  });
 });

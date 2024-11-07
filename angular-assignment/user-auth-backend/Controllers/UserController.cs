@@ -176,7 +176,7 @@ namespace user_auth_backend.Controllers
 
             if (user == null)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Invalid username or email");
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Invalid username");
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, new {user.FirstName, user.LastName, user.ProfileImage});

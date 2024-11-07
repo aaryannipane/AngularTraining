@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -17,6 +17,14 @@ import {
 import { AlertMessageComponent } from './components/alert-message/alert-message.component';
 import { HttpInterceptorInterceptor } from './http-interceptor.interceptor';
 
+export function initializeApp() {
+  return () => {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(true), 5000);
+    });
+  };
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +42,7 @@ import { HttpInterceptorInterceptor } from './http-interceptor.interceptor';
       useClass: HttpInterceptorInterceptor,
       multi: true,
     },
+    { provide: APP_INITIALIZER, useFactory: initializeApp, multi: true },
     provideHttpClient(withInterceptorsFromDi()),
   ],
   bootstrap: [AppComponent],
