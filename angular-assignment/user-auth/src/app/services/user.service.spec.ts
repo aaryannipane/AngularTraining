@@ -38,6 +38,19 @@ describe('UserService', () => {
     ]);
   });
 
+  it('should get Bad Request error while get states', () => {
+    userService.getStates().subscribe({
+      error: (error: HttpErrorResponse) => {
+        expect(error.status).toBe(400);
+      },
+    });
+
+    const req = httpTest.expectOne(`${url}/states`);
+
+    expect(req.request.method).toEqual('GET');
+    req.flush('', { status: 400, statusText: 'BadRequest' });
+  });
+
   it('should get all citys by state id', () => {
     const stateId = '1';
     userService.getCitys(stateId).subscribe((citys) => {

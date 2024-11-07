@@ -13,8 +13,9 @@ import { AlertService } from '../../services/alert.service';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { AppRoutingModule } from '../../app-routing.module';
+import { By } from '@angular/platform-browser';
 
-fdescribe('RegisterComponent', () => {
+describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
   let debugElement: DebugElement;
@@ -117,5 +118,64 @@ fdescribe('RegisterComponent', () => {
     component.onSubmit();
 
     expect(component.registerForm.valid).toBeFalse();
+  });
+
+  it('should set citys on change of state', () => {
+    // spyOn(component, 'onStateChange')
+    const citys = [
+      { Id: 1, Name: 'Mumbai' },
+      { Id: 2, Name: 'Ulwe' },
+    ];
+    userService.getCitys.and.returnValue(of(citys));
+
+    const selectStateElement = debugElement.queryAll(By.css('select'))[0];
+
+    component.registerForm.get('state')?.setValue('1');
+
+    // fixture.detectChanges();
+    selectStateElement.nativeElement.dispatchEvent(new Event('change'));
+
+    fixture.detectChanges();
+
+    expect(userService.getCitys).toHaveBeenCalledTimes(1);
+    expect(component.citys).toEqual(citys);
+
+    expect(component.registerForm.get('state')?.value).toBe('1');
+  });
+
+  it('should remove image', () => {
+    // spyOn(component, 'removeImg');
+
+    component.registerForm.get('image')?.setErrors(null);
+    fixture.detectChanges();
+    let removeButton = debugElement.queryAll(
+      By.css('button[type="button"]')
+    )[0];
+
+    removeButton.nativeElement.click();
+    expect(component.isFileSelected).toBeTrue();
+    expect(component.registerForm.get('image')?.value).toBe('');
+  });
+
+  it('should reset the form', () => {
+    component.onReset();
+
+    expect(component.registerForm.valid).toBeFalse();
+  });
+
+  it('should toggle password eye', () => {
+    const passwordEye = debugElement.query(By.css('.pass-eye '));
+
+    expect(
+      passwordEye.nativeElement.classList.contains('glyphicon-eye-open')
+    ).toBeTrue();
+
+    passwordEye.nativeElement.click();
+    expect(
+      passwordEye.nativeElement.classList.contains('glyphicon-eye-open')
+    ).toBeFalse();
+    expect(
+      passwordEye.nativeElement.classList.contains('glyphicon-eye-close')
+    ).toBeTrue();
   });
 });

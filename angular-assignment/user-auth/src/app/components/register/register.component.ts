@@ -175,6 +175,8 @@ export class RegisterComponent implements OnInit {
   }
 
   onStateChange(event: Event) {
+    
+
     if (!isNaN(this.state?.value)) {
       this.userService.getCitys(this.state?.value).subscribe({
         next: (data) => {
@@ -217,14 +219,8 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     this.validateAllFormFields(this.registerForm);
-    console.log('inside on submit ');
-    console.log(this.registerForm.errors);
-
-    console.log('is valid form> ' + this.registerForm.get('image')?.valid);
 
     if (this.registerForm.valid) {
-      console.log('form is valid');
-
       // create form data and fill value
       let fd = new FormData();
       Object.keys(this.registerForm.controls).forEach((key) => {
