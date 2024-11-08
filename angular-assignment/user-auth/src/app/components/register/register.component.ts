@@ -175,8 +175,6 @@ export class RegisterComponent implements OnInit {
   }
 
   onStateChange(event: Event) {
-    
-
     if (!isNaN(this.state?.value)) {
       this.userService.getCitys(this.state?.value).subscribe({
         next: (data) => {
@@ -193,7 +191,9 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  onFileChange(event: Event) {
+  onFileChange(event: any) {
+    console.log(event);
+
     if (this.image?.valid) {
       const element = event.currentTarget as HTMLInputElement;
       this.profileImageFile = element?.files?.[0];

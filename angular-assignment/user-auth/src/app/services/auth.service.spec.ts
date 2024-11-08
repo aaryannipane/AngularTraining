@@ -38,4 +38,11 @@ describe('AuthService', () => {
       JSON.stringify(isAuth)
     );
   });
+
+  it('should set isAuth in constructor when isAuth is true and token is present', () => {
+    spyOn(localStorage, 'getItem').and.returnValue('true');
+    let testService = new AuthService();
+
+    expect(testService.IsAuthenticated).toBeTrue();
+  });
 });

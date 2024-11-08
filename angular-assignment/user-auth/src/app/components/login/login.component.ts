@@ -43,6 +43,8 @@ export class LoginComponent {
   onSubmit() {
     this.validateAllFormFields(this.loginForm);
     if (this.loginForm.valid) {
+      console.log('login is valid');
+
       this.isSubmit = true;
       this.userService.loginUser(this.loginForm.value).subscribe({
         next: (data: { [index: string]: any }) => {
@@ -55,7 +57,7 @@ export class LoginComponent {
           this.router.navigate(['']);
         },
         error: (err) => {
-          // console.log(err);
+          console.log(err);
 
           this.alert.setAlert('danger', err.error.Message);
           this.isSubmit = false;
@@ -74,7 +76,6 @@ export class LoginComponent {
       el.classList.add('glyphicon-eye-open');
       el.classList.remove('glyphicon-eye-close');
       (el.previousSibling! as HTMLInputElement).type = 'password';
-
     }
   }
 }

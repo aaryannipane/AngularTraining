@@ -8,7 +8,7 @@ export class AlertService {
   alerts: any = [];
   private alertSub: Subject<any> = new Subject<any>();
   alertObs = this.alertSub.asObservable();
-  constructor() {}
+
   setAlert(type: Alert, message: string) {
     this.alerts.push({ type, message });
     this.alertSub.next(this.alerts);
@@ -16,6 +16,7 @@ export class AlertService {
     setTimeout(() => {
       let idx = this.alerts.length - 1;
       this.alerts.splice(idx, 1);
+
       this.alertSub.next(this.alerts);
     }, 5000);
     window.scrollTo({

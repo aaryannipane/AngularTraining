@@ -2,18 +2,24 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegisterComponent } from './register.component';
 import {
+  AbstractControl,
   FormArray,
   FormBuilder,
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
 import { UserService } from '../../services/user.service';
-import { DebugElement, Renderer2 } from '@angular/core';
+import {
+  DebugElement,
+  Renderer2,
+  ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR,
+} from '@angular/core';
 import { AlertService } from '../../services/alert.service';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { AppRoutingModule } from '../../app-routing.module';
 import { By } from '@angular/platform-browser';
+import { dobValidator } from '../../validators/dob.validator';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -70,8 +76,27 @@ describe('RegisterComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should test ngOnInit', () => {
+  it('should test ngOnInit with get state success', () => {
     // fixture.detectChanges();
+
+    component.ngOnInit();
+    fixture.detectChanges();
+
+    expect(userService.getStates).toHaveBeenCalled();
+
+    expect(userService.getRoles).toHaveBeenCalled();
+  });
+
+  it('should test ngOnInit with get state fail and get role fail', () => {
+    // fixture.detectChanges();
+
+    userService.getStates.and.returnValue(
+      throwError(() => new Error('failed to load state'))
+    );
+
+    userService.getRoles.and.returnValue(
+      throwError(() => new Error('failed to load state'))
+    );
 
     component.ngOnInit();
     fixture.detectChanges();
@@ -120,6 +145,36 @@ describe('RegisterComponent', () => {
     expect(component.registerForm.valid).toBeFalse();
   });
 
+  it('should give error from register user on submit', () => {
+    spyOn(component, 'validateAllFormFields');
+    userService.registerUser.and.returnValue(
+      throwError(() => ({ error: { Message: 'username is already taken' } }))
+    );
+
+    let registerForm = component.registerForm;
+
+    registerForm.get('firstName')?.setValue('Aryan');
+    registerForm.get('lastName')?.setValue('Nipane');
+    registerForm.get('username')?.setValue('aryannipane');
+    registerForm.get('email')?.setValue('aryan@gmail.com');
+    registerForm.get('passwords')?.get('password')?.setValue('aA2@');
+    registerForm.get('passwords')?.get('confirmPassword')?.setValue('aA2@');
+    registerForm.get('dob')?.setValue(Date.now());
+    registerForm.get('gender')?.setValue('Male');
+    registerForm.get('state')?.setValue(1);
+    registerForm.get('city')?.setValue(1);
+    (registerForm.get('roles') as FormArray).controls.at(0)?.setValue(true);
+
+    registerForm.get('image')?.setErrors(null);
+    component.onSubmit();
+
+    expect(component.registerForm.valid).toBeTrue();
+
+    expect(userService.registerUser).toHaveBeenCalledTimes(1);
+    expect(component.isSubmit).toBeFalse();
+    expect(alertService.setAlert).toHaveBeenCalledTimes(1);
+  });
+
   it('should set citys on change of state', () => {
     // spyOn(component, 'onStateChange')
     const citys = [
@@ -139,6 +194,31 @@ describe('RegisterComponent', () => {
 
     expect(userService.getCitys).toHaveBeenCalledTimes(1);
     expect(component.citys).toEqual(citys);
+
+    expect(component.registerForm.get('state')?.value).toBe('1');
+  });
+
+  it('should set city disable on change state with getCitys error', () => {
+    // spyOn(component, 'onStateChange')
+    const citys = [
+      { Id: 1, Name: 'Mumbai' },
+      { Id: 2, Name: 'Ulwe' },
+    ];
+    userService.getCitys.and.returnValue(
+      throwError(() => new Error('get city failed'))
+    );
+
+    const selectStateElement = debugElement.queryAll(By.css('select'))[0];
+
+    component.registerForm.get('state')?.setValue('1');
+
+    // fixture.detectChanges();
+    selectStateElement.nativeElement.dispatchEvent(new Event('change'));
+
+    fixture.detectChanges();
+
+    expect(userService.getCitys).toHaveBeenCalledTimes(1);
+    expect(component.city?.disabled).toBeTrue();
 
     expect(component.registerForm.get('state')?.value).toBe('1');
   });
@@ -171,11 +251,36 @@ describe('RegisterComponent', () => {
     ).toBeTrue();
 
     passwordEye.nativeElement.click();
-    expect(
-      passwordEye.nativeElement.classList.contains('glyphicon-eye-open')
-    ).toBeFalse();
+
     expect(
       passwordEye.nativeElement.classList.contains('glyphicon-eye-close')
     ).toBeTrue();
+
+    passwordEye.nativeElement.click();
+    expect(
+      passwordEye.nativeElement.classList.contains('glyphicon-eye-open')
+    ).toBeTrue();
+  });
+
+  it('should get invalid date', () => {
+    let futureDate = new Date();
+    futureDate.setDate(futureDate.getDate() + 2);
+    component.registerForm
+      .get('dob')
+      ?.setValue(futureDate.toISOString().split('T')[0]);
+
+    component.registerForm.get('dob')?.updateValueAndValidity();
+    console.error('FOCUS');
+
+    console.error(
+      (component.registerForm.get('dob') as AbstractControl)?.value
+    );
+
+    expect(component.registerForm.get('dob')?.valid).toBeFalse();
+
+    // let error = dobValidator(
+    //   component.registerForm.get('dob') as AbstractControl
+    // );
+    // expect(error).toEqual({ noMatch: true });
   });
 });

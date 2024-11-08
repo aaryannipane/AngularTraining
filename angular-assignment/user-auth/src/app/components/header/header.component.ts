@@ -7,20 +7,17 @@ import { Route, Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   isAuthenticated = false;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit(): void {
     this.authService.authObs$.subscribe({
       next: (data) => {
         this.isAuthenticated = data.isAuthenticated;
       },
     });
-
-    // let isAuth = localStorage.getItem('isAuth');
-    // if (isAuth) {
-    //   this.isAuthenticated = !!isAuth;
-    // }
   }
 
   logout(event: any) {
