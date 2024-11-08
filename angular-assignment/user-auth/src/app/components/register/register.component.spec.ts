@@ -200,10 +200,7 @@ describe('RegisterComponent', () => {
 
   it('should set city disable on change state with getCitys error', () => {
     // spyOn(component, 'onStateChange')
-    const citys = [
-      { Id: 1, Name: 'Mumbai' },
-      { Id: 2, Name: 'Ulwe' },
-    ];
+
     userService.getCitys.and.returnValue(
       throwError(() => new Error('get city failed'))
     );
@@ -270,17 +267,7 @@ describe('RegisterComponent', () => {
       ?.setValue(futureDate.toISOString().split('T')[0]);
 
     component.registerForm.get('dob')?.updateValueAndValidity();
-    console.error('FOCUS');
-
-    console.error(
-      (component.registerForm.get('dob') as AbstractControl)?.value
-    );
 
     expect(component.registerForm.get('dob')?.valid).toBeFalse();
-
-    // let error = dobValidator(
-    //   component.registerForm.get('dob') as AbstractControl
-    // );
-    // expect(error).toEqual({ noMatch: true });
   });
 });
